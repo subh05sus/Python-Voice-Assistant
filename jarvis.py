@@ -6,18 +6,12 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import random
-import smtplib
 
 
 
 engine = pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
-
-email_dict={
-    "me":"sahasubhadip54@gmail.com",
-    "baba":"sasti.saha75@gmail.com",
-    "didi":"sahasnehafkk@gmail.com"}
 
 
 
@@ -67,14 +61,6 @@ def takeCommand(): #takes microphone inout and returns output
         return "None" #None string will be returned
     return query
 
-def sendEmail(to, econtent): #sending email
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-    server.login('subhadipsudi@gmail.com', 'Sudi@1234')
-    server.sendmail('subhadipsudi@gmail.com', to, econtent)
-    server.close()
-
 if __name__ == "__main__":
     wishMe()
     speak("How May I Help You Sir ?")
@@ -119,54 +105,12 @@ if __name__ == "__main__":
         elif 'download youtube videos' in query:
             speak("Here We Go")
             webbrowser.open("en.onlinevideoconverter.pro")
-        elif 'play music' in query:
-            music_dir = 'C:\\Users\\sahas\\OneDrive\\Desktop\\Subhadip\\Media\\Fav one'
-            songs = os.listdir(music_dir)
-            a=len(songs)-1
-            ran_num= random.randint(0,a)
-            os.startfile(os.path.join(music_dir, songs[ran_num]))
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(strTime)
         elif 'the date' in query:
             today=datetime.date.today()
             speak(today)
-        elif 'open downloads' in query:
-                downloadPath='C:\\Users\\sahas\\Downloads'
-                os.startfile(downloadPath)
-        elif 'my important documents' in query:
-                downloadPath='F:\\Media'
-                os.startfile(downloadPath)
-        elif 'my media' in query:
-                downloadPath='F:\\Docs'
-                os.startfile(downloadPath)
-        elif 'code' in query:
-                ApplicationPath="C:\\Users\\sahas\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
-                os.startfile(ApplicationPath)
-        elif 'filmora' in query:
-                ApplicationPath="C:\\Program Files\\Wondershare\\Filmora9\\Wondershare Filmora9.exe"
-                os.startfile(ApplicationPath)
-        elif 'chrome' in query:
-                ApplicationPath="C:\\Program Files\\Google\Chrome\\Application\\chrome.exe"
-                os.startfile(ApplicationPath)
-        elif 'email' in query:
-            try:
-                if 'me' in query:
-                    to = email_dict.get("me")
-                elif 'baba' in query:
-                    to = email_dict.get("baba")
-                elif 'didi' in query:
-                    to = email_dict.get("didi")
-                else:
-                    to = input("Enter New Email: ")
-                
-                speak("What should I say ?")
-                econtent=takeCommand()
-                sendEmail(to, econtent)
-                speak("Email has been sent!")
-            except Exception as e:
-                print("Sorry Sir, I can't send the email")
-                speak("Sorry Sir, I can't send the email")
         elif query == 'jarvis':
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
