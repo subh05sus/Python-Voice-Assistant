@@ -6,6 +6,8 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import random
+import requests
+from bs4 import BeautifulSoup
 
 
 
@@ -134,3 +136,25 @@ if __name__ == "__main__":
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
+        elif "weather" in query:
+          speak("which city should I search in")
+          city = takeCommand()
+          city=city.replace(" ","+")
+          search = "temperature in" + city
+          speak("Here We Go ")
+          url = f"https://www.google.com/search?q={search}"
+          r  = requests.get(url)
+          data = BeautifulSoup(r.text,"html.parser")
+          temp = data.find("div", class_ = "BNeawe").text
+          speak(f"current{search} is {temp}")
+        elif "weather" in query:
+           speak("which city should I search in")
+           cty = takeCommand()
+           cty=cty.replace(" ","+")
+           search = "temperature in" + cty 
+           url = f"https://www.google.com/search?q={search}"
+           r  = requests.get(url)
+           data = BeautifulSoup(r.text,"html.parser")
+           temp = data.find("div", class_ = "BNeawe").text
+           speak(f"current{search} is {temp}")
+        
