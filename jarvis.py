@@ -115,8 +115,7 @@ if __name__ == "__main__":
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
             speak(list_of_jokes[ran_joke])
-        
-        ''' code added by Pyoush Madan'''
+
         elif "volume up" in query:
             pyautogui.press("volumeup")
             speak("volume upped")
@@ -143,7 +142,6 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 speak("error")
-        ''' code added by Pyoush Madan'''
         
         elif 'todo'in query or 'to do' in query:
             if 'add' in query or 'create' in query:
@@ -164,3 +162,7 @@ if __name__ == "__main__":
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
+        
+        elif 'open spotify' in query:
+            speak("Opening spotify")
+            webbrowser.open("spotify.com")
