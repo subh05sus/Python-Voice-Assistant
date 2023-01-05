@@ -6,9 +6,9 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import random
-
-
-
+import pyautogui #code added by Pyoush Madan
+from time import sleep #code added by Pyoush Madan
+import screen_brightness_control as sbc #code added by Pyoush Madan
 engine = pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
@@ -115,6 +115,36 @@ if __name__ == "__main__":
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
             speak(list_of_jokes[ran_joke])
+        
+        ''' code added by Pyoush Madan'''
+        elif "volume up" in query:
+            pyautogui.press("volumeup")
+            speak("volume upped")
+            sleep(1)
+            speak("anything else for which i may assist you")
+        elif "volume down" in query:
+            pyautogui.press("volumedown")
+            speak("volume lowered")
+            sleep(1)
+            speak("anything else for which i may assist you")
+        elif "mute" in query:
+            pyautogui.press("volumemute")
+            speak("volume muted")
+            sleep(1)
+            speak("anything else for which i may assist you")
+        elif "brightness" in query:
+            try:
+                current=sbc.get_brightness()
+                bright=int(takecommand())
+                set=sbc.set_brightness(bright)
+                speak(f"brightness set to {set} percent")
+                sleep(1)
+                speak("anything else for which i may assist you")
+            except Exception as e:
+                print(e)
+                speak("error")
+        ''' code added by Pyoush Madan'''
+        
         elif 'todo'in query or 'to do' in query:
             if 'add' in query or 'create' in query:
                 with open('todo.txt','a') as f:
