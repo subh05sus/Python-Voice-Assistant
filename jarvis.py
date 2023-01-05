@@ -43,7 +43,7 @@ def wishMe(): #wishes me
     if hour>=0 and hour<=4:
         pass
     else:
-        speak("I am Your Personal assistant, Jarvis! version 1.2!")
+        speak("I am Your Personal assistant, Jarvis! version 1.0!")
 
 def takeCommand(): #takes microphone inout and returns output
     r=sr.Recognizer()
