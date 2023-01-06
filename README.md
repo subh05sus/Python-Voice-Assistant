@@ -1,36 +1,40 @@
 # Python-Voice-Assistant
 
-This Voice assistant can greet you, can search items in google, youtube, wikipedia, can open twitter, instagram, facebook, can create todo list
+a Python-based voice assistant that can greet you and perform a variety of tasks, including searching the web, opening social media, and creating a to-do list.
 
-##How does this code work?
+## How does this code work?
 
-This code is fully made with Python and its packages made it run easier.
+This voice assistant is built using a combination of various Python packages, making it easy for you to use and access a wide range of functionality.
+
+## Requirements
+
+In order to run this voice assistant, you will need the following:
+
+* Python 3.5 or later
+* The packages listed in the requirements.txt file
 
 ## Installation
 
-You need to download and install some modules in cmd with the help of pip to run it properly.
+To run this code, you will need to download and install the necessary modules using pip. To do this, open your command prompt and enter the following:
 
-`pip install time`
+```sh
+pip install -r requirements.txt
+```
 
-`pip install pyttsx3`
+## Running the Code
 
-`pip install datetime`
+To run the code, navigate to the directory where the code is stored and enter the following command:
 
-`pip install speechrecognition`
-
-`pip install wikipedi`
-
-`pip install webbrowser`
-
-`pip install random`
-
+```sh
+python jarvis.py
+```
 
 ## Contributing
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also open an issue with the tag `enhancement`.
+If you have an idea for how to improve this voice assistant, we welcome your contributions! To suggest a change, please follow these steps:
 
-1. Fork the Project.
-2. Create your Feature Branch. `git checkout -b feature/feature-name`
-3. Commit your Changes. `git commit -s -m "Add some AmazingFeature"`
-4. Push to the Branch. `git push origin feature/feature-name`
-5. Open a Pull Request.
+1. Fork the repository.
+2. Create a new branch for your changes. For example: git checkout -b feature/amazing-feature
+3. Commit your changes. Use a descriptive commit message, such as: git commit -s -m "Add some AmazingFeature"
+4. Push your changes to the branch. git push origin feature/amazing-feature
+5. Open a pull request.
