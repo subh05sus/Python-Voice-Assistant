@@ -159,10 +159,10 @@ if __name__ == "__main__":
                 with open("todo.txt","w") as f:
                     f.write("")
                 speak("All Tasks has been cleared, Sir !")
+        elif 'open spotify' in query:
+            speak("Opening spotify")
+            webbrowser.open("spotify.com")
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
         
-        elif 'open spotify' in query:
-            speak("Opening spotify")
-            webbrowser.open("spotify.com")
