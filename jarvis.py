@@ -6,6 +6,10 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import random
+import requests
+from bs4 import BeautifulSoup
+
+
 
 engine = pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
@@ -41,7 +45,7 @@ def wishMe(): #wishes me
     if hour>=0 and hour<=4:
         pass
     else:
-        speak("I am Your Personal assistant, Jarvis! version 1.0!")
+        speak("I am Your Personal assistant, Jarvis! version 1.2! With the power of 8 gigabytes of ram, along with GPU and SSD")
 
 def takeCommand(): #takes microphone inout and returns output
     r=sr.Recognizer()
@@ -113,36 +117,6 @@ if __name__ == "__main__":
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
             speak(list_of_jokes[ran_joke])
-        
-        ''' code added by Pyoush Madan'''
-        elif "volume up" in query:
-            pyautogui.press("volumeup")
-            speak("volume upped")
-            sleep(1)
-            speak("anything else for which i may assist you")
-        elif "volume down" in query:
-            pyautogui.press("volumedown")
-            speak("volume lowered")
-            sleep(1)
-            speak("anything else for which i may assist you")
-        elif "mute" in query:
-            pyautogui.press("volumemute")
-            speak("volume muted")
-            sleep(1)
-            speak("anything else for which i may assist you")
-        elif "brightness" in query:
-            try:
-                current=sbc.get_brightness()
-                bright=int(takecommand())
-                set=sbc.set_brightness(bright)
-                speak(f"brightness set to {set} percent")
-                sleep(1)
-                speak("anything else for which i may assist you")
-            except Exception as e:
-                print(e)
-                speak("error")
-        ''' code added by Pyoush Madan'''
-        
         elif 'todo'in query or 'to do' in query:
             if 'add' in query or 'create' in query:
                 with open('todo.txt','a') as f:
@@ -162,4 +136,24 @@ if __name__ == "__main__":
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
-        
+        elif "weather" in query:
+          speak("which city should I search in")
+          city = takeCommand()
+          city=city.replace(" ","+")
+          search = "temperature in" + city
+          speak("Here We Go ")
+          url = f"https://www.google.com/search?q={search}"
+          r  = requests.get(url)
+          data = BeautifulSoup(r.text,"html.parser")
+          temp = data.find("div", class_ = "BNeawe").text
+          speak(f"current{search} is {temp}")
+        elif "weather" in query:
+           speak("which city should I search in")
+           cty = takeCommand()
+           cty=cty.replace(" ","+")
+           search = "temperature in" + cty 
+           url = f"https://www.google.com/search?q={search}"
+           r  = requests.get(url)
+           data = BeautifulSoup(r.text,"html.parser")
+           temp = data.find("div", class_ = "BNeawe").text
+           speak(f"current{search} is {temp}")
