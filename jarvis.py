@@ -1,12 +1,6 @@
 import pyttsx3
-import datetime as dt
-import webbrowser
-import random
-import pyautogui  # code added by Pyoush Madan
-from time import sleep  # code added by Pyoush Madan
-
-
 import response
+
 from voice_utils import speak, speech_reconnize
 
 engine = pyttsx3.init("sapi5")
