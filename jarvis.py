@@ -12,6 +12,7 @@ import pyautogui  # code added by Pyoush Madan
 from time import sleep  # code added by Pyoush Madan
 import screen_brightness_control as sbc  # code added by Pyoush Madan
 import requests
+import pyjokes
 from bs4 import BeautifulSoup
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -122,7 +123,9 @@ if __name__ == "__main__":
         elif query == 'jarvis':
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
-            speak(list_of_jokes[ran_joke])
+            joke = pyjokes.get_joke()
+            print(joke)
+            speak(joke)
 
         elif "volume up" in query:
             pyautogui.press("volumeup")
@@ -209,6 +212,7 @@ if __name__ == "__main__":
         elif "who made you" in query or "who created you" in query or "who discovered you" in query:
             speak("I was built by a Human")
             print("I was built by a Human")
+
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
