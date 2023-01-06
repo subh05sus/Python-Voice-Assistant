@@ -6,6 +6,7 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import random
+import subprocess
 import pyautogui #code added by Pyoush Madan
 from time import sleep #code added by Pyoush Madan
 import screen_brightness_control as sbc #code added by Pyoush Madan
@@ -165,4 +166,7 @@ if __name__ == "__main__":
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
+        elif "log off" in query or "sign out" in query:
+            speak("Ok , your pc will log off in 10 sec make sure you exit from all applications")
+            subprocess.call(["shutdown", "/l"])
         
