@@ -206,7 +206,9 @@ if __name__ == "__main__":
 
             else:
                 speak(" City Not Found ")
-
+        elif "who made you" in query or "who created you" in query or "who discovered you" in query:
+            speak("I was built by a Human")
+            print("I was built by a Human")
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
