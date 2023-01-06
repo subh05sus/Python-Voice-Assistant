@@ -7,13 +7,8 @@ engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
 engine.setProperty("voices", voices[0].id)
 
-list_of_jokes = [
-    "The three most well known languages in India are English, Hindi, and... JavaScript",
-    "Interviewer... Where were you born?Me in India... Interviewer:.. oh, which part?... Me: What ‘which part’ ..? Whole body was born in India",
-    "how many Indians does it take to fix a lightbulb?Two. One to do the task and other to explain how lightbulbs were actually invented in ancient India",
-    "What do you call bread from India? It's Naan of your business",
-    "Britain: Drive on the left side... Europe and America: Drive on the right side...India: lol what's a 'traffic law'?",
-]
+with open('./list_of_jokes.txt') as f:
+    list_of_jokes = f.readlines()
 
 if __name__ == "__main__":
 
