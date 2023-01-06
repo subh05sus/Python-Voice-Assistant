@@ -11,6 +11,8 @@ from ecapture import ecapture as ec
 import pyautogui  # code added by Pyoush Madan
 from time import sleep  # code added by Pyoush Madan
 import screen_brightness_control as sbc  # code added by Pyoush Madan
+import requests
+from bs4 import BeautifulSoup
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
@@ -175,6 +177,35 @@ if __name__ == "__main__":
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
             ec.capture(0, "robo camera", "img.jpg")
+        elif "weather" in query:
+            api_key = "8ef61edcf1c576d65d836254e11ea420"
+            base_url = "https://api.openweathermap.org/data/2.5/weather?"
+            speak("whats the city name")
+            city_name = takeCommand()
+            complete_url = base_url+"appid="+api_key+"&q="+city_name
+            response = requests.get(complete_url)
+            x = response.json()
+            if x["cod"] != "404":
+                y = x["main"]
+                current_temperature = y["temp"]
+                current_humidiy = y["humidity"]
+                z = x["weather"]
+                weather_description = z[0]["description"]
+                speak(" Temperature in kelvin unit is " +
+                      str(current_temperature) +
+                      "\n humidity in percentage is " +
+                      str(current_humidiy) +
+                      "\n description  " +
+                      str(weather_description))
+                print(" Temperature in kelvin unit = " +
+                      str(current_temperature) +
+                      "\n humidity (in percentage) = " +
+                      str(current_humidiy) +
+                      "\n description = " +
+                      str(weather_description))
+
+            else:
+                speak(" City Not Found ")
 
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
