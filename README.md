@@ -34,6 +34,8 @@ You need to download and install some modules in cmd with the help of pip to run
 
 `pip install pyjokes`
 
+`pip install openai`
+
 
 
 ### Using Alternative method using Scripts
@@ -45,6 +47,21 @@ You can use Startup.bat in Windows and you can use Startup.sh file on Mac/Linux/
 
 1) To run it you can open the directory and double-click on it.
 2) To run it via the Terminal you can cd into the directory and type ./Startup.bat or ./Startup.sh and hit Enter.
+
+## Using ChatGPT
+To use ChatGPT, you would need an API key. To get the API Key follow the steps below.
+### Getting API Keys
+1) First go to https://openai.com/
+![Picture1](Documentation/Picture1.png)
+2) Now click on API and Sign Up and make sure to state that the account is for Personal works.
+3) Now go to Manage Accounts and go to Usage to make sure you have some free credits.
+![Picture2](Documentation/Picture2.png)
+![Picture3](Documentation/Picture3.png)
+4) Now go to API Keys and generate an API key.
+![Picture4](Documentation/Picture4.png)
+![Picture5](Documentation/Picture5.png)
+5) Copy and paste the API Key in the code.
+![Picture6](Documentation/Picture6.png)
 
 ## Contributing
 
