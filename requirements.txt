@@ -1,0 +1,6 @@
+pyttsx3
+datetime
+speechrecognition
+wikipedia
+pyautogui
+screen_brightness_control
