@@ -145,7 +145,7 @@ if __name__ == "__main__":
         elif "brightness" in query:
             try:
                 current = sbc.get_brightness()
-                bright = int(takecommand())
+                bright = int(takeCommand())
                 set = sbc.set_brightness(bright)
                 speak(f"brightness set to {set} percent")
                 sleep(1)
@@ -176,39 +176,41 @@ if __name__ == "__main__":
 
         elif "log off" in query or "sign out" in query:
             speak(
-                "Ok , your pc will log off in 10 sec make sure you exit from all applications")
+                "Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
-            ec.capture(0, "robo camera", "img.jpg")
-        elif "weather" in query:
+            ec.capture(0, "Jarvis-camera", "img.jpg")
+        elif "weather" in query or "temperature" in query:
             api_key = "8ef61edcf1c576d65d836254e11ea420"
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
-            speak("whats the city name")
+            speak("What is the name of the city?")
             city_name = takeCommand()
             complete_url = base_url+"appid="+api_key+"&q="+city_name
             response = requests.get(complete_url)
             x = response.json()
             if x["cod"] != "404":
-                y = x["main"]
-                current_temperature = y["temp"]
-                current_humidiy = y["humidity"]
-                z = x["weather"]
-                weather_description = z[0]["description"]
-                speak(" Temperature in kelvin unit is " +
-                      str(current_temperature) +
-                      "\n humidity in percentage is " +
-                      str(current_humidiy) +
-                      "\n description  " +
-                      str(weather_description))
-                print(" Temperature in kelvin unit = " +
-                      str(current_temperature) +
-                      "\n humidity (in percentage) = " +
-                      str(current_humidiy) +
-                      "\n description = " +
-                      str(weather_description))
-
+                    y = x["main"]
+                    current_temperature = y["temp"] - 273.15
+                    current_temperature = float('%.2f' %current_temperature)
+                    current_humidiy = y["humidity"]
+                    z = x["weather"]
+                    weather_description = z[0]["description"]
+                    speak(" Temperature in Celcius unit is " +
+                        str(current_temperature) +
+                        "\n humidity in percentage is " +
+                        str(current_humidiy) +
+                        "\n description  " +
+                        str(weather_description))
+                    print(" Temperature in kelvin unit = " +
+                        str(current_temperature) +
+                        "\n humidity (in percentage) = " +
+                        str(current_humidiy) +
+                        "\n description = " +
+                        str(weather_description))
             else:
-                speak(" City Not Found ")
+                    speak("Can't find details about this city")
+           
+                
         elif "who made you" in query or "who created you" in query or "who discovered you" in query:
             speak("I was built by a Human")
             print("I was built by a Human")
