@@ -39,12 +39,12 @@ You need to download and install some modules in cmd with the help of pip to run
 ### Using Alternative method using Scripts
 
 Alternatively, you can also use the provided scripts to make installation easy.
-You can use Startup.bat in Windows and you can use Startup.sh file on Mac/Linux/UNIX-like Opearting Systems.
+You can use Setup.bat in Windows and you can use Setup.sh file on Mac/Linux/UNIX-like Opearting Systems.
 
 #### Running the Script
 
 1) To run it you can open the directory and double-click on it.
-2) To run it via the Terminal you can cd into the directory and type ./Startup.bat or ./Startup.sh and hit Enter.
+2) To run it via the Terminal you can cd into the directory and type ./Setup.bat or ./Setup.sh and hit Enter.
 
 ## Contributing
 
