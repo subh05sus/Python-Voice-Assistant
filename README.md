@@ -10,7 +10,9 @@ This voice assistant is built using a combination of various Python packages, ma
 
 You need to download and install some modules in cmd with the help of pip to run it properly.
 
-`pip install time`
+`pip install why`
+
+`pip install customtkinter`
 
 `pip install pyttsx3`
 
@@ -20,13 +22,29 @@ You need to download and install some modules in cmd with the help of pip to run
 
 `pip install wikipedia`
 
-`pip install webbrowser`
-
-`pip install random`
-
 `pip install pyautogui`
 
 `pip install screen_brightness_control`
+
+`pip install pyscreenshot`
+
+`pip install bs4`
+
+`pip install requests`
+
+`pip install pyjokes`
+
+
+
+### Using Alternative method using Scripts
+
+Alternatively, you can also use the provided scripts to make installation easy.
+You can use Startup.bat in Windows and you can use Startup.sh file on Mac/Linux/UNIX-like Opearting Systems.
+
+#### Running the Script
+
+1) To run it you can open the directory and double-click on it.
+2) To run it via the Terminal you can cd into the directory and type ./Startup.bat or ./Startup.sh and hit Enter.
 
 ## Contributing
 
