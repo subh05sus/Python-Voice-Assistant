@@ -13,6 +13,7 @@ from time import sleep  # code added by Pyoush Madan
 import screen_brightness_control as sbc  # code added by Pyoush Madan
 import requests
 import pyjokes
+import pywhatkit
 from bs4 import BeautifulSoup
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -180,6 +181,10 @@ if __name__ == "__main__":
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
             ec.capture(0, "robo camera", "img.jpg")
+        elif 'play' in query:
+            song = query.replace('play', '')
+            speak('playing ' + song)
+            pywhatkit.playonyt(song)
         elif "weather" in query:
             api_key = "8ef61edcf1c576d65d836254e11ea420"
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
