@@ -145,7 +145,7 @@ if __name__ == "__main__":
         elif "brightness" in query:
             try:
                 current = sbc.get_brightness()
-                bright = int(takecommand())
+                bright = int(sbc.takecommand())
                 set = sbc.set_brightness(bright)
                 speak(f"brightness set to {set} percent")
                 sleep(1)
