@@ -223,7 +223,7 @@ if __name__ == "__main__":
             def GPT():
                 speak("Connecting to Veronica")
                 #Enter API KEY or Leave blank if you don't want to use this function
-                openai.api_key = "X"
+                openai.api_key = ""
                 engine1 = pyttsx3.init()
                 voices = engine1.getProperty('voices')
                 engine1.setProperty('voice', voices[1].id)
