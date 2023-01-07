@@ -1,4 +1,5 @@
 import os
+import requests
 from time import strftime
 import pyttsx3
 import datetime
@@ -124,9 +125,14 @@ if __name__ == "__main__":
         elif query == 'jarvis':
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
-            joke = pyjokes.get_joke()
-            print(joke)
-            speak(joke)
+            URL= 'https://v2.jokeapi.dev/joke/Any'
+            response = requests.get(urls=URL)
+            data = response.json()
+            if response.status_code==200:
+               speak(data['setup'])
+               speak(data['delivery'])
+            else:   
+               speak(list_of_jokes[ran_joke])
 
         elif "volume up" in query:
             pyautogui.press("volumeup")
@@ -221,3 +227,18 @@ if __name__ == "__main__":
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
+
+        elif 'news' in query:
+            api_key='9bb9b456bf124f80aba6a0e09cc2f811'
+            URL='https://newsapi.org/v2/top-headlines?country=us&apiKey='+api_key
+
+            resp = requests.get(URL)
+            if resp.status_code==200:
+               data=resp.json()
+               news=data['articles'][0]
+               speak(news['title'])
+               speak(news['description'])
+            else:
+                speak("Cannot find a news at this moment")   
+
+        
