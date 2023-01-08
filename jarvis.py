@@ -176,8 +176,7 @@ if __name__ == "__main__":
             webbrowser.open("spotify.com")
 
         elif "log off" in query or "sign out" in query:
-            speak(
-                "Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
+            speak("Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
             ec.capture(0, "Jarvis-camera", "img.jpg")
