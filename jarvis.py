@@ -15,6 +15,7 @@ import screen_brightness_control as sbc  # code added by Pyoush Madan
 import requests
 import pyjokes
 import pywhatkit
+import googletrans
 from bs4 import BeautifulSoup
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -180,6 +181,24 @@ if __name__ == "__main__":
         elif 'open spotify' in query:
             speak("Opening spotify")
             webbrowser.open("spotify.com")
+            
+        elif "translate" in query:
+                    translator = googletrans. Translator()
+                    lang = ['en', 'ta', 'te', 'kn' ,'ml']
+                    # To Print all the languages that Google Translator Support
+                    # Command to print Languages Supported
+                    # print(googletrans.LANGUAGES)
+                    speak("Sir please tell me the Sentence that you want me to translate")
+                    text = takeCommand().lower()
+                    speak("Please choose a Source Language by pressing a number from the following List!")
+                    print(" english --->  1  Tamil ---> 2  Telugu ---> 3  Kannada ----> 4  Malayalam ---> 5")
+                    numberS = int(input("Enter here: "))
+                    speak("Please choose a Destination Language by pressing a number from the following List!")
+                    print(" english --->  1  Tamil ---> 2  Telugu ---> 3  Kannada ----> 4  Malayalam ---> 5")
+                    numberD = int(input("Enter here: "))
+                    translated = translator.translate(text, src = lang[numberS-1], dest = lang[numberD-1])
+                    print(translated.text)
+                    print("Legibility is:", (translated.extra_data['confidence'])*100, "%")
 
         elif "log off" in query or "sign out" in query:
             speak(
