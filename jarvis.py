@@ -116,6 +116,33 @@ if __name__ == "__main__":
         elif 'download youtube videos' in query:
             speak("Here We Go")
             webbrowser.open("en.onlinevideoconverter.pro")
+        elif 'open whatsapp' in query:
+            speak("Here We Go")
+            webbrowser.open("web.whatsapp.com")
+        elif 'open reddit' in query:
+            speak("Here We Go")
+            webbrowser.open("reddit.com")
+        elif 'open linkedin' in query:
+            speak("Here We Go")
+            webbrowser.open("linkedin.com")
+        elif 'open pinterest' in query:
+            speak("Here We Go")
+            webbrowser.open("pinterest.com")
+        elif 'open quora' in query:
+            speak("Here We Go")
+            webbrowser.open("quora.com")
+        elif 'open discord' in query:
+            speak("Here We Go")
+            webbrowser.open("discord.com")
+        elif ('open prime video' or 'open amazon prime video') in query:
+            speak("Here We Go")
+            webbrowser.open("primevideo.com")
+        elif ('open netflix') in query:
+            speak("Here We Go")
+            webbrowser.open("netflix.com")
+        elif('open hotstar') in query:
+            speak("Here We Go")
+            webbrowser.open("hotstar.com")
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(strTime)
