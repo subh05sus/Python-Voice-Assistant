@@ -38,3 +38,14 @@ pip install pyscreenshot
 pip install bs4
 pip install requests
 pip install pyjokes
+
+
+sudo apt-get install libasound-dev
+
+
+# download portaudio archive from http://files.portaudio.com/download.html
+
+# unzip it 
+tar -zxvf [portaudio.tgz]
+
+pip install pyaudio
