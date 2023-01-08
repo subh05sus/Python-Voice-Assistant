@@ -17,8 +17,8 @@ import pyjokes
 import pywhatkit
 from bs4 import BeautifulSoup
 import openai
+from PyDictionary import PyDictionary
 engine = pyttsx3.init()
-
 voices = engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
 
@@ -320,3 +320,12 @@ if __name__ == "__main__":
                speak(news['description'])
             else:
                 speak("Cannot find a news at this moment")  
+
+        elif 'meaning' in query:
+            speak("Which word do you want me to define Sir?")
+            queryword = takeCommand().lower()
+            meaning = PyDictionary.meaning(queryword)
+
+            for i in meaning:
+                print(meaning[i])
+                speak("Sir the meaning is  ", str(meaning[i]))
