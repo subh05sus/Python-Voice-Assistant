@@ -36,7 +36,7 @@ You need to download and install some modules in cmd with the help of pip to run
 
 `pip install openai`
 
-
+`pip install PyDictionary`
 
 ### Using Alternative method using Scripts
 
