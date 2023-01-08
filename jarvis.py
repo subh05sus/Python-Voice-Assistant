@@ -7,8 +7,9 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import random
+import psutil # Code Added By Vishnuppriyan
 import subprocess
-import speedtest
+import speedtest # Code Added By Vishnuppriyan
 from ecapture import ecapture as ec
 import pyautogui  # code added by Pyoush Madan
 from time import sleep  # code added by Pyoush Madan
@@ -16,7 +17,7 @@ import screen_brightness_control as sbc  # code added by Pyoush Madan
 import requests
 import pyjokes
 import pywhatkit
-import googletrans
+import googletrans # Code Added By Vishnuppriyan
 from bs4 import BeautifulSoup
 import openai
 from PyDictionary import PyDictionary
@@ -182,6 +183,21 @@ if __name__ == "__main__":
             speak("volume lowered")
             sleep(1)
             speak("anything else for which i may assist you")
+        
+        elif 'battery' in query:
+                    battery = psutil.sensors_battery()
+                    percentage = battery.percent
+                    speak(f'Sir our System still has {percentage} percent battery')
+                    if percentage>=75:
+                        print("\U0001F601")
+                        speak('Sir we have enough power to continue our work!')
+                    elif percentage>=40 and percentage<75:
+                        speak('Sir we should think of connecting our system to the battery supply!')
+                    elif percentage<=40 and percentage>=15:
+                        speak("Sir we don't have enough power to work through!... Connect now sir!")
+                    elif percentage<15:
+                        speak('Sir we have very low power!... Our System may Shutdown anytime soon!...')
+                        
         elif "mute" in query:
             pyautogui.press("volumemute")
             speak("volume muted")
