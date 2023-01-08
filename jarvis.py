@@ -8,6 +8,7 @@ import wikipedia
 import webbrowser
 import random
 import subprocess
+import speedtest
 from ecapture import ecapture as ec
 import pyautogui  # code added by Pyoush Madan
 from time import sleep  # code added by Pyoush Madan
@@ -28,6 +29,7 @@ ran_joke = random.randint(0, jokes)
 
 
 def speak(audio):  # speak audio
+    print(audio)
     engine.say(audio)
     engine.runAndWait()
 
@@ -84,6 +86,12 @@ if __name__ == "__main__":
             speak("Accoring to Wikipedia")
             print(results)
             speak(results)
+            
+        elif 'internet speed' in query:
+                    st = speedtest.Speedtest()
+                    dl = bytes_to_mb(st.download())
+                    up = bytes_to_mb(st.upload())
+                    speak(f'Sir we have {dl} MB per second of DOWNLOAD SPEED and {up} MB per second of UPLOAD SPEED')
 
         elif 'open youtube' in query:
             speak("Here We Go")
