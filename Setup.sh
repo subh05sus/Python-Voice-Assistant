@@ -38,3 +38,4 @@ pip install pyscreenshot
 pip install bs4
 pip install requests
 pip install pyjokes
+pip install openai
