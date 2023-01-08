@@ -2,6 +2,32 @@
 
 A Python-based voice assistant that can greet you and perform a variety of tasks, including searching the web, opening social media, and creating a to-do list.
 
+![Python-Voice-Assistant](https://socialify.git.ci/subhadip-saha-05/python-voice-assistant/image?font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark)
+
+
+
+<div align="center">
+ <p>
+
+[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)
+![Visitors](https://api.visitorbadge.io/api/visitors?path=subhadip-saha-05%2Fpython-voice-assistant%20&countColor=%23263759&style=flat)
+![GitHub forks](https://img.shields.io/github/forks/subhadip-saha-05/python-voice-assistant)
+![GitHub Repo stars](https://img.shields.io/github/stars/subhadip-saha-05/python-voice-assistant)
+![GitHub contributors](https://img.shields.io/github/contributors/subhadip-saha-05/python-voice-assistant)
+![GitHub last commit](https://img.shields.io/github/last-commit/subhadip-saha-05/python-voice-assistant)
+  
+![GitHub repo size](https://img.shields.io/github/repo-size/subhadip-saha-05/python-voice-assistant)
+
+![Github](https://img.shields.io/github/license/subhadip-saha-05/python-voice-assistant)
+![GitHub issues](https://img.shields.io/github/issues/subhadip-saha-05/python-voice-assistant)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/subhadip-saha-05/python-voice-assistant)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/subhadip-saha-05/python-voice-assistant)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/subhadip-saha-05/python-voice-assistant)
+ </p>
+</div>
+
+
 ## How does this code work?
 
 This voice assistant is built using a combination of various Python packages, making it easy for you to use and access a wide range of functionality.
@@ -83,4 +109,4 @@ If you have a suggestion that would make this better, please fork the repo and c
 5. Open a Pull Request.
 
 ## Contributors
-[![Contributors](https://contrib.rocks/image?repo=subhadip-saha-05/PythOn-voice-assistant)](https://github.com/subhadip-saha-05/PythOn-voice-assistant/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=subhadip-Saha-05/PythOn-voice-assistant)](https://github.com/subhadip-saha-05/PythOn-voice-assistant/graphs/contributors)
