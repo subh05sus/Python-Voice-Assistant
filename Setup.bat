@@ -14,6 +14,7 @@ echo pyscreenshot
 echo bs4
 echo requests
 echo pyjokes
+echo openai
 pause
 
 start /WAIT /B pip install why
@@ -28,3 +29,4 @@ start /WAIT /B pip install pyscreenshot
 start /WAIT /B pip install bs4
 start /WAIT /B pip install requests
 start /WAIT /B pip install pyjokes
+start /WAIT /B pip install openai

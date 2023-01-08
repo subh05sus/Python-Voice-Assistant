@@ -16,7 +16,10 @@ import requests
 import pyjokes
 import pywhatkit
 from bs4 import BeautifulSoup
+=======
+import openai
 engine = pyttsx3.init()
+
 voices = engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
 
@@ -116,6 +119,33 @@ if __name__ == "__main__":
         elif 'download youtube videos' in query:
             speak("Here We Go")
             webbrowser.open("en.onlinevideoconverter.pro")
+        elif 'open whatsapp' in query:
+            speak("Here We Go")
+            webbrowser.open("web.whatsapp.com")
+        elif 'open reddit' in query:
+            speak("Here We Go")
+            webbrowser.open("reddit.com")
+        elif 'open linkedin' in query:
+            speak("Here We Go")
+            webbrowser.open("linkedin.com")
+        elif 'open pinterest' in query:
+            speak("Here We Go")
+            webbrowser.open("pinterest.com")
+        elif 'open quora' in query:
+            speak("Here We Go")
+            webbrowser.open("quora.com")
+        elif 'open discord' in query:
+            speak("Here We Go")
+            webbrowser.open("discord.com")
+        elif ('open prime video' or 'open amazon prime video') in query:
+            speak("Here We Go")
+            webbrowser.open("primevideo.com")
+        elif ('open netflix') in query:
+            speak("Here We Go")
+            webbrowser.open("netflix.com")
+        elif('open hotstar') in query:
+            speak("Here We Go")
+            webbrowser.open("hotstar.com")
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(strTime)
@@ -152,7 +182,7 @@ if __name__ == "__main__":
         elif "brightness" in query:
             try:
                 current = sbc.get_brightness()
-                bright = int(takecommand())
+                bright = int(takeCommand())
                 set = sbc.set_brightness(bright)
                 speak(f"brightness set to {set} percent")
                 sleep(1)
@@ -182,10 +212,13 @@ if __name__ == "__main__":
             webbrowser.open("spotify.com")
 
         elif "log off" in query or "sign out" in query:
-            speak(
-                "Ok , your pc will log off in 10 sec make sure you exit from all applications")
+            speak("Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
+
+            ec.capture(0, "Jarvis-camera", "img.jpg")
+        elif "weather" in query or "temperature" in query:
+
             ec.capture(0, "robo camera", "img.jpg")
         elif 'play' in query:
             song = query.replace('play', '')
@@ -194,32 +227,34 @@ if __name__ == "__main__":
         elif "weather" in query:
             api_key = "8ef61edcf1c576d65d836254e11ea420"
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
-            speak("whats the city name")
+            speak("What is the name of the city?")
             city_name = takeCommand()
             complete_url = base_url+"appid="+api_key+"&q="+city_name
             response = requests.get(complete_url)
             x = response.json()
             if x["cod"] != "404":
-                y = x["main"]
-                current_temperature = y["temp"]
-                current_humidiy = y["humidity"]
-                z = x["weather"]
-                weather_description = z[0]["description"]
-                speak(" Temperature in kelvin unit is " +
-                      str(current_temperature) +
-                      "\n humidity in percentage is " +
-                      str(current_humidiy) +
-                      "\n description  " +
-                      str(weather_description))
-                print(" Temperature in kelvin unit = " +
-                      str(current_temperature) +
-                      "\n humidity (in percentage) = " +
-                      str(current_humidiy) +
-                      "\n description = " +
-                      str(weather_description))
-
+                    y = x["main"]
+                    current_temperature = y["temp"] - 273.15
+                    current_temperature = float('%.2f' %current_temperature)
+                    current_humidiy = y["humidity"]
+                    z = x["weather"]
+                    weather_description = z[0]["description"]
+                    speak(" Temperature in Celcius unit is " +
+                        str(current_temperature) +
+                        "\n humidity in percentage is " +
+                        str(current_humidiy) +
+                        "\n description  " +
+                        str(weather_description))
+                    print(" Temperature in kelvin unit = " +
+                        str(current_temperature) +
+                        "\n humidity (in percentage) = " +
+                        str(current_humidiy) +
+                        "\n description = " +
+                        str(weather_description))
             else:
-                speak(" City Not Found ")
+                    speak("Can't find details about this city")
+           
+                
         elif "who made you" in query or "who created you" in query or "who discovered you" in query:
             speak("I was built by a Human")
             print("I was built by a Human")
@@ -227,6 +262,52 @@ if __name__ == "__main__":
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
+
+        elif "initiate" in query or "chat" in query or "Veronica" in query or "gpt" in query:
+            def GPT():
+                speak("Connecting to Veronica")
+                #Enter API KEY or Leave blank if you don't want to use this function
+                openai.api_key = ""
+                engine1 = pyttsx3.init()
+                voices = engine1.getProperty('voices')
+                engine1.setProperty('voice', voices[1].id)
+                r = sr.Recognizer()
+                mic = sr.Microphone(device_index=1)
+                
+               
+
+                conversation = ""
+                
+                user_name = str(input("Enter your name: "))
+                bot_name = "Veronica"
+                print("Hey,"+user_name)
+                
+                while True:
+                    with mic as source:
+                        print("\nlistening...")
+                        r.adjust_for_ambient_noise(source, duration=0.2)
+                        audio = r.listen(source)
+                    print("no longer listening.\n")
+
+                    try:
+                        user_input = r.recognize_google(audio)
+                    except:
+                        continue
+
+                    prompt = user_name + ": " + user_input + "\n" + bot_name+ ": "
+                    
+                    conversation += prompt  # allows for context
+                    # fetch response from open AI api
+                    response = openai.Completion.create(engine='text-davinci-003', prompt=conversation, max_tokens=50)
+                    response_str = response["choices"][0]["text"].replace("\n", "")
+                    response_str = response_str.split(user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
+                
+                    conversation += response_str + "\n"
+                    print(response_str)
+                    engine1.say(response_str)
+                    engine1.runAndWait()
+            GPT()
+
 
         elif 'news' in query:
             api_key='9bb9b456bf124f80aba6a0e09cc2f811'
@@ -239,6 +320,4 @@ if __name__ == "__main__":
                speak(news['title'])
                speak(news['description'])
             else:
-                speak("Cannot find a news at this moment")   
-
-        
+                speak("Cannot find a news at this moment")  

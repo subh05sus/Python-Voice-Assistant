@@ -46,6 +46,8 @@ sudo apt-get install libasound-dev
 # download portaudio archive from http://files.portaudio.com/download.html
 
 # unzip it 
-tar -zxvf [portaudio.tgz]
+# tar -zxvf [portaudio.tgz]
 
-pip install pyaudio
+# pip install pyaudio
+=======
+pip install openai
