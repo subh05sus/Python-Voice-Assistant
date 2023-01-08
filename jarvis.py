@@ -153,7 +153,7 @@ if __name__ == "__main__":
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
             URL= 'https://v2.jokeapi.dev/joke/Any'
-            response = requests.get(urls=URL)
+            response = requests.get(URL)
             data = response.json()
             if response.status_code==200:
                speak(data['setup'])
