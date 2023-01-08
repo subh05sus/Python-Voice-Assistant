@@ -16,7 +16,6 @@ import requests
 import pyjokes
 import pywhatkit
 from bs4 import BeautifulSoup
-=======
 import openai
 engine = pyttsx3.init()
 
