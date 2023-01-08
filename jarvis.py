@@ -15,6 +15,9 @@ import screen_brightness_control as sbc  # code added by Pyoush Madan
 import requests
 import pyjokes
 import pywhatkit
+import psutil # Code Added By Vishnuppriyan
+import googletrans # Code Added By Vishnuppriyan
+import speedtest #Code Added By Vishnuppriyan
 from bs4 import BeautifulSoup
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -107,6 +110,21 @@ if __name__ == "__main__":
         elif 'open instagram' in query:
             speak("Here We Go")
             webbrowser.open("instagram.com")
+         
+        elif 'battery' in query:
+                    battery = psutil.sensors_battery()
+                    percentage = battery.percent
+                    speak(f'Sir our System still has {percentage} percent battery')
+                    if percentage>=75:
+                        print("\U0001F601")
+                        speak('Sir we have enough power to continue our work!')
+                    elif percentage>=40 and percentage<75:
+                        speak('Sir we should think of connecting our system to the battery supply!')
+                    elif percentage<=40 and percentage>=15:
+                        speak("Sir we don't have enough power to work through!... Connect now sir!")
+                    elif percentage<15:
+                        speak('Sir we have very low power!... Our System may Shutdown anytime soon!...')
+                        
         elif 'open facebook' in query:
             speak("Here We Go")
             webbrowser.open("facebook.com")
