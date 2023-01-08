@@ -83,4 +83,4 @@ If you have a suggestion that would make this better, please fork the repo and c
 5. Open a Pull Request.
 
 ## Contributors
-[![Contributors](https://contrib.rocks/image?repo=subhadip-saha-05/Python-voice-Assistant)](https://github.com/subhadip-saha-05/Python-voice-Assistant/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=subhadip-saha-05/PythOn-voice-assistant)](https://github.com/subhadip-saha-05/PythOn-voice-assistant/graphs/contributors)
