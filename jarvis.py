@@ -357,12 +357,12 @@ if __name__ == "__main__":
                     bot_name = "Veronica"
                     print("Hey,"+user_name)
                     
-                  while True:
-                    with mic as source:
-                        print("\nlistening...")
-                        r.adjust_for_ambient_noise(source, duration=0.2)
-                        audio = r.listen(source)
-                    print("no longer listening.\n")
+                    while True:
+                        with mic as source:
+                            print("\nlistening...")
+                            r.adjust_for_ambient_noise(source, duration=0.2)
+                            audio = r.listen(source)
+                        print("no longer listening.\n")
 
                         try:
                             user_input = r.recognize_google(audio)
@@ -371,32 +371,32 @@ if __name__ == "__main__":
 
 
                         prompt = user_name + ": " + user_input + "\n" + bot_name+ ": "
-                        
+                            
                         conversation += prompt  # allows for context
-                        # fetch response from open AI api
+                            # fetch response from open AI api
                         response = openai.Completion.create(engine='text-davinci-003', prompt=conversation, max_tokens=50)
                         response_str = response["choices"][0]["text"].replace("\n", "")
                         response_str = response_str.split(user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
-                    
+                        
                         conversation += response_str + "\n"
                         print(response_str)
                         engine1.say(response_str)
 
-                    prompt = user_name + ": " + user_input + "\n" + bot_name + ": "
+                        prompt = user_name + ": " + user_input + "\n" + bot_name + ": "
 
-                    conversation += prompt  # allows for context
-                    # fetch response from open AI api
-                    response = openai.Completion.create(
-                        engine='text-davinci-003', prompt=conversation, max_tokens=50)
-                    response_str = response["choices"][0]["text"].replace(
-                        "\n", "")
-                    response_str = response_str.split(
-                        user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
+                        conversation += prompt  # allows for context
+                        # fetch response from open AI api
+                        response = openai.Completion.create(
+                            engine='text-davinci-003', prompt=conversation, max_tokens=50)
+                        response_str = response["choices"][0]["text"].replace(
+                            "\n", "")
+                        response_str = response_str.split(
+                            user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
 
-                    conversation += response_str + "\n"
-                    print(response_str)
-                    engine1.say(response_str)
-                    engine1.runAndWait()
+                        conversation += response_str + "\n"
+                        print(response_str)
+                        engine1.say(response_str)
+                        engine1.runAndWait()
             GPT()
 
         elif 'news' in query:
