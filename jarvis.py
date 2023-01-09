@@ -307,6 +307,17 @@ if __name__ == "__main__":
                       str(weather_description))
             else:
                 speak("Can't find details about this city")
+                
+        elif "current news" in query or "latest news" in query:
+            url = "https://www.indiatoday.in/india"
+            page = requests.get(url)
+            soup = BeautifulSoup(page.content, 'html.parser')
+
+            # Find all the headlines on the page
+            headlines = soup.find_all("h2")
+            for headline in headlines[:4]:
+                print(headline.text)
+                speak(headline.text)
 
         elif "who made you" in query or "who created you" in query or "who discovered you" in query:
             speak("I was built by a Human")
