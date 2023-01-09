@@ -22,6 +22,7 @@ import googletrans  # Code Added By Vishnuppriyan
 from bs4 import BeautifulSoup
 import openai
 import time
+from pywikihow import search_wikihow
 # from PyDictionary import PyDictionary
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -419,6 +420,17 @@ if __name__ == "__main__":
             speak(f"NumberOfProcessors: {my_system.NumberOfProcessors}")
             speak(f"SystemType: {my_system.SystemType}")
             speak(f"SystemFamily: {my_system.SystemFamily}")
+
+        elif 'how to' in query:
+            try:
+                # query = query.replace('how to', '')
+                max_results = 1
+                data = search_wikihow(query, max_results)
+                # assert len(data) == 1
+                data[0].print()
+                speak(data[0].summary)
+            except Exception as e:
+                speak('Sorry, I am unable to find the answer for your query.')
 
         elif 'meaning' in query:
             speak("Which word do you want me to define Sir?")
