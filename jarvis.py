@@ -1,3 +1,4 @@
+import wmi
 import os
 import requests
 from time import strftime
@@ -37,10 +38,11 @@ def speak(audio):  # speak audio
     print(audio)
     engine.say(audio)
     engine.runAndWait()
-    
+
+
 def bytes_to_mb(bytes):
-    KB = 1024 # One Kilobyte is 1024 bytes
-    MB = KB * 1024 # One MB is 1024 KB
+    KB = 1024  # One Kilobyte is 1024 bytes
+    MB = KB * 1024  # One MB is 1024 KB
     return int(bytes/MB)
 
 
@@ -312,7 +314,7 @@ if __name__ == "__main__":
                       str(weather_description))
             else:
                 speak("Can't find details about this city")
-                
+
         elif "current news" in query or "latest news" in query:
             url = "https://www.indiatoday.in/india"
             page = requests.get(url)
@@ -406,6 +408,17 @@ if __name__ == "__main__":
             img = pyautogui.screenshot(name_img)
             speak("screenshot is taken, sir")
             img.show()
+
+        elif "system" in query:
+
+            c = wmi.WMI()
+            my_system = c.Win32_ComputerSystem()[0]
+            speak(f"Manufacturer: {my_system.Manufacturer}")
+            speak(f"Model: {my_system. Model}")
+            speak(f"Name: {my_system.Name}")
+            speak(f"NumberOfProcessors: {my_system.NumberOfProcessors}")
+            speak(f"SystemType: {my_system.SystemType}")
+            speak(f"SystemFamily: {my_system.SystemFamily}")
 
         elif 'meaning' in query:
             speak("Which word do you want me to define Sir?")
