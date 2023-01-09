@@ -304,7 +304,7 @@ if __name__ == "__main__":
                       str(current_humidiy) +
                       "\n description  " +
                       str(weather_description))
-                print(" Temperature in kelvin unit = " +
+                print(" Temperature in Celcius unit = " +
                       str(current_temperature) +
                       "\n humidity (in percentage) = " +
                       str(current_humidiy) +
@@ -357,28 +357,7 @@ if __name__ == "__main__":
                     bot_name = "Veronica"
                     print("Hey,"+user_name)
                     
-                    while True:
-                        with mic as source:
-                            print("\nlistening...")
-                            r.adjust_for_ambient_noise(source, duration=0.2)
-                            audio = r.listen(source)
-                        print("no longer listening.\n")
-
-                # Enter API KEY or Leave blank if you don't want to use this function
-                openai.api_key = ""
-                engine1 = pyttsx3.init()
-                voices = engine1.getProperty('voices')
-                engine1.setProperty('voice', voices[1].id)
-                r = sr.Recognizer()
-                mic = sr.Microphone(device_index=1)
-
-                conversation = ""
-
-                user_name = str(input("Enter your name: "))
-                bot_name = "Veronica"
-                print("Hey,"+user_name)
-
-                while True:
+                  while True:
                     with mic as source:
                         print("\nlistening...")
                         r.adjust_for_ambient_noise(source, duration=0.2)
