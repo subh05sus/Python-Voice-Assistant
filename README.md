@@ -41,12 +41,12 @@ You need to download and install some modules in cmd with the help of pip to run
 ### Using Alternative method using Scripts
 
 Alternatively, you can also use the provided scripts to make installation easy.
-You can use Startup.bat in Windows and you can use Startup.sh file on Mac/Linux/UNIX-like Opearting Systems.
+You can use Setup.bat in Windows and you can use Setup.sh file on Mac/Linux/UNIX-like Opearting Systems.
 
 #### Running the Script
 
 1) To run it you can open the directory and double-click on it.
-2) To run it via the Terminal you can cd into the directory and type ./Startup.bat or ./Startup.sh and hit Enter.
+2) To run it via the Terminal you can cd into the directory and type ./Setup.bat or ./Setup.sh and hit Enter.
 
 ## Using ChatGPT
 To use ChatGPT, you would need an API key. To get the API Key follow the steps below.
@@ -83,4 +83,4 @@ If you have a suggestion that would make this better, please fork the repo and c
 5. Open a Pull Request.
 
 ## Contributors
-[![Contributors](https://contrib.rocks/image?repo=subhadip-saha-05/Python-Voice-Assistant)](https://github.com/subhadip-saha-05/Python-Voice-Assistant/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=subhadip-saha-05/Python-voice-Assistant)](https://github.com/subhadip-saha-05/Python-voice-Assistant/graphs/contributors)

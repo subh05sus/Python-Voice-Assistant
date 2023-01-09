@@ -1,4 +1,5 @@
 import os
+import requests
 from time import strftime
 import pyttsx3
 import datetime
@@ -13,6 +14,7 @@ from time import sleep  # code added by Pyoush Madan
 import screen_brightness_control as sbc  # code added by Pyoush Madan
 import requests
 import pyjokes
+import pywhatkit
 from bs4 import BeautifulSoup
 import openai
 engine = pyttsx3.init('sapi5')
@@ -115,6 +117,33 @@ if __name__ == "__main__":
         elif 'download youtube videos' in query:
             speak("Here We Go")
             webbrowser.open("en.onlinevideoconverter.pro")
+        elif 'open whatsapp' in query:
+            speak("Here We Go")
+            webbrowser.open("web.whatsapp.com")
+        elif 'open reddit' in query:
+            speak("Here We Go")
+            webbrowser.open("reddit.com")
+        elif 'open linkedin' in query:
+            speak("Here We Go")
+            webbrowser.open("linkedin.com")
+        elif 'open pinterest' in query:
+            speak("Here We Go")
+            webbrowser.open("pinterest.com")
+        elif 'open quora' in query:
+            speak("Here We Go")
+            webbrowser.open("quora.com")
+        elif 'open discord' in query:
+            speak("Here We Go")
+            webbrowser.open("discord.com")
+        elif ('open prime video' or 'open amazon prime video') in query:
+            speak("Here We Go")
+            webbrowser.open("primevideo.com")
+        elif ('open netflix') in query:
+            speak("Here We Go")
+            webbrowser.open("netflix.com")
+        elif('open hotstar') in query:
+            speak("Here We Go")
+            webbrowser.open("hotstar.com")
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(strTime)
@@ -124,9 +153,14 @@ if __name__ == "__main__":
         elif query == 'jarvis':
             speak("At Your Service Sir, How can I help you")
         elif 'joke' in query:
-            joke = pyjokes.get_joke()
-            print(joke)
-            speak(joke)
+            URL= 'https://v2.jokeapi.dev/joke/Any'
+            response = requests.get(urls=URL)
+            data = response.json()
+            if response.status_code==200:
+               speak(data['setup'])
+               speak(data['delivery'])
+            else:   
+               speak(list_of_jokes[ran_joke])
 
         elif "volume up" in query:
             pyautogui.press("volumeup")
@@ -179,8 +213,16 @@ if __name__ == "__main__":
             speak("Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
+
             ec.capture(0, "Jarvis-camera", "img.jpg")
         elif "weather" in query or "temperature" in query:
+
+            ec.capture(0, "robo camera", "img.jpg")
+        elif 'play' in query:
+            song = query.replace('play', '')
+            speak('playing ' + song)
+            pywhatkit.playonyt(song)
+        elif "weather" in query:
             api_key = "8ef61edcf1c576d65d836254e11ea420"
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
             speak("What is the name of the city?")
@@ -218,6 +260,7 @@ if __name__ == "__main__":
         elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
             speak("Thanks you for using Jarvis Sir")
             exit()
+
         elif "initiate" in query or "chat" in query or "Veronica" in query or "gpt" in query:
             def GPT():
                 speak("Connecting to Veronica")
@@ -266,3 +309,17 @@ if __name__ == "__main__":
                         print(response_str)
                         engine1.say(response_str)
             GPT()
+
+
+        elif 'news' in query:
+            api_key='9bb9b456bf124f80aba6a0e09cc2f811'
+            URL='https://newsapi.org/v2/top-headlines?country=us&apiKey='+api_key
+
+            resp = requests.get(URL)
+            if resp.status_code==200:
+               data=resp.json()
+               news=data['articles'][0]
+               speak(news['title'])
+               speak(news['description'])
+            else:
+                speak("Cannot find a news at this moment")  
