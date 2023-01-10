@@ -278,11 +278,7 @@ if __name__ == "__main__":
                 "Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
-
             ec.capture(0, "Jarvis-camera", "img.jpg")
-        elif "weather" in query or "temperature" in query:
-
-            ec.capture(0, "robo camera", "img.jpg")
         elif 'play' in query:
             song = query.replace('play', '')
             speak('playing ' + song)
