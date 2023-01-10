@@ -278,11 +278,7 @@ if __name__ == "__main__":
                 "Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         elif "camera" in query or "take a photo" in query:
-
             ec.capture(0, "Jarvis-camera", "img.jpg")
-        elif "weather" in query or "temperature" in query:
-
-            ec.capture(0, "robo camera", "img.jpg")
         elif 'play' in query:
             song = query.replace('play', '')
             speak('playing ' + song)
@@ -308,7 +304,7 @@ if __name__ == "__main__":
                       str(current_humidiy) +
                       "\n description  " +
                       str(weather_description))
-                print(" Temperature in kelvin unit = " +
+                print(" Temperature in Celcius unit = " +
                       str(current_temperature) +
                       "\n humidity (in percentage) = " +
                       str(current_humidiy) +
@@ -339,47 +335,68 @@ if __name__ == "__main__":
         elif "initiate" in query or "chat" in query or "Veronica" in query or "gpt" in query:
             def GPT():
                 speak("Connecting to Veronica")
-                # Enter API KEY or Leave blank if you don't want to use this function
-                openai.api_key = ""
-                engine1 = pyttsx3.init()
-                voices = engine1.getProperty('voices')
-                engine1.setProperty('voice', voices[1].id)
-                r = sr.Recognizer()
-                mic = sr.Microphone(device_index=1)
 
-                conversation = ""
+                #Enter API KEY or Leave blank if you don't want to use this function
+                API_KEY = ""
+                openai.api_key = API_KEY
+                if API_KEY == "":
+                    print("Please Enter the API Key!")
+                    speak("Please Enter the API Key!")
+                while API_KEY != "":
+                    engine1 = pyttsx3.init()
+                    voices = engine1.getProperty('voices')
+                    engine1.setProperty('voice', voices[1].id)
+                    r = sr.Recognizer()
+                    mic = sr.Microphone(device_index=1)
+                    
+                
 
-                user_name = str(input("Enter your name: "))
-                bot_name = "Veronica"
-                print("Hey,"+user_name)
+                    conversation = ""
+                    
+                    user_name = str(input("Enter your name: "))
+                    bot_name = "Veronica"
+                    print("Hey,"+user_name)
+                    
+                    while True:
+                        with mic as source:
+                            print("\nlistening...")
+                            r.adjust_for_ambient_noise(source, duration=0.2)
+                            audio = r.listen(source)
+                        print("no longer listening.\n")
 
-                while True:
-                    with mic as source:
-                        print("\nlistening...")
-                        r.adjust_for_ambient_noise(source, duration=0.2)
-                        audio = r.listen(source)
-                    print("no longer listening.\n")
+                        try:
+                            user_input = r.recognize_google(audio)
+                        except:
+                            continue
 
-                    try:
-                        user_input = r.recognize_google(audio)
-                    except:
-                        continue
 
-                    prompt = user_name + ": " + user_input + "\n" + bot_name + ": "
+                        prompt = user_name + ": " + user_input + "\n" + bot_name+ ": "
+                            
+                        conversation += prompt  # allows for context
+                            # fetch response from open AI api
+                        response = openai.Completion.create(engine='text-davinci-003', prompt=conversation, max_tokens=50)
+                        response_str = response["choices"][0]["text"].replace("\n", "")
+                        response_str = response_str.split(user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
+                        
+                        conversation += response_str + "\n"
+                        print(response_str)
+                        engine1.say(response_str)
 
-                    conversation += prompt  # allows for context
-                    # fetch response from open AI api
-                    response = openai.Completion.create(
-                        engine='text-davinci-003', prompt=conversation, max_tokens=50)
-                    response_str = response["choices"][0]["text"].replace(
-                        "\n", "")
-                    response_str = response_str.split(
-                        user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
+                        prompt = user_name + ": " + user_input + "\n" + bot_name + ": "
 
-                    conversation += response_str + "\n"
-                    print(response_str)
-                    engine1.say(response_str)
-                    engine1.runAndWait()
+                        conversation += prompt  # allows for context
+                        # fetch response from open AI api
+                        response = openai.Completion.create(
+                            engine='text-davinci-003', prompt=conversation, max_tokens=50)
+                        response_str = response["choices"][0]["text"].replace(
+                            "\n", "")
+                        response_str = response_str.split(
+                            user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
+
+                        conversation += response_str + "\n"
+                        print(response_str)
+                        engine1.say(response_str)
+                        engine1.runAndWait()
             GPT()
 
         elif 'news' in query:
