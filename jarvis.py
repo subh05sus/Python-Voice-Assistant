@@ -1,29 +1,27 @@
-import wmi
-import os
-import requests
-from time import strftime
-import pyttsx3
 import datetime
-import speech_recognition as sr
-import wikipedia
-import webbrowser
 import random
-import psutil  # Code Added By Vishnuppriyan
 import subprocess
-import speedtest  # Code Added By Vishnuppriyan
-from ecapture import ecapture as ec
-import pyautogui  # code added by Pyoush Madan
-from time import sleep  # code added by Pyoush Madan
-import screen_brightness_control as sbc  # code added by Pyoush Madan
-import requests
-import pyjokes
-import pywhatkit
-import googletrans  # Code Added By Vishnuppriyan
-from bs4 import BeautifulSoup
-import openai
 import time
-import MyAlarm
+import webbrowser
+from time import sleep  # code added by Pyoush Madan
+
+import PyDictionary
+import googletrans  # Code Added By Vishnuppriyan
+import openai
+import psutil  # Code Added By Vishnuppriyan
+import pyautogui  # code added by Pyoush Madan
+import pyttsx3
+import pywhatkit
+import requests
+import screen_brightness_control as sbc  # code added by Pyoush Madan
+import speech_recognition as sr
+import speedtest  # Code Added By Vishnuppriyan
+import wikipedia
+import wmi
+from bs4 import BeautifulSoup
+from ecapture import ecapture as ec
 from pywikihow import search_wikihow
+
 # from PyDictionary import PyDictionary
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -457,7 +455,7 @@ if __name__ == "__main__":
             a_info = a_info.replace('set an alarm for', '')
             a_info = a_info.replace('.', '')
             a_info = a_info.upper()
-            MyAlarm.alarm(a_info)
+
 
         elif 'meaning' in query:
             speak("Which word do you want me to define Sir?")
