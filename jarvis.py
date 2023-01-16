@@ -45,30 +45,31 @@ def bytes_to_mb(bytes):
     return int(bytes / (1024 ** 2))
 
 
-def wishMe():  # wishes me
+def wishMe():
     
-    hour = int(datetime.datetime.now().hour)
+    hour = datetime.datetime.now().hour
     
-    if hour >= 0 and hour <= 3:
+    if hour in range(0, 4):
         speak("It's Late Night Sir!, You should sleep right now")
+        return
 
-    elif hour >= 4 and hour < 12:
+    elif hour in range(4, 12):
         speak("Good Moring Master!")
+        return
         
-    elif hour >= 12 and hour < 17:
+    elif hour in range(12, 17):
         speak("Good Afternoon Sir !")
+        return
         
-    elif hour >= 17 and hour < 19:
+    elif hour in range(17, 19):
         speak("Good Evening !")
+        return
         
-    elif hour >= 19 and hour < 24:
+    elif hour in range(19, 24):
         speak("Good Night Sir!")
+        return
 
-    if hour >= 0 and hour <= 4:
-        pass
-    
-    else:
-        speak("I am Your Personal assistant, Jarvis! version 1.0!")
+    speak("I am Your Personal assistant, Jarvis! version 1.0!")
 
 
 def takeCommand():  # takes microphone inout and returns output
