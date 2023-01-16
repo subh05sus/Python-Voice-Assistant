@@ -55,6 +55,7 @@ cd /your_path/Python-Voice-Assistant
 
 ```sh
 cd /your_path/Python-Voice-Assistant
+chmod +x ./Setup.sh
 ./Setup.sh
 ```
 
