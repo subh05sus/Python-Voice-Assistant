@@ -22,7 +22,7 @@ import googletrans  # Code Added By Vishnuppriyan
 from bs4 import BeautifulSoup
 import openai
 import time
-import MyAlarm
+# import MyAlarm
 from pywikihow import search_wikihow
 # from PyDictionary import PyDictionary
 engine = pyttsx3.init()
@@ -450,19 +450,21 @@ if __name__ == "__main__":
             except Exception as e:
                 speak('Sorry, I am unable to find the answer for your query.')
 
-        elif 'set alarm' in query:
-            speak(
-                "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
-            a_info = takeCommand()
-            a_info = a_info.replace('set an alarm for', '')
-            a_info = a_info.replace('.', '')
-            a_info = a_info.upper()
-            MyAlarm.alarm(a_info)
+#         elif 'set alarm' in query:
+#             speak(
+#                 "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
+#             a_info = takeCommand()
+#             a_info = a_info.replace('set an alarm for', '')
+#             a_info = a_info.replace('.', '')
+#             a_info = a_info.upper()
+#             MyAlarm.alarm(a_info)
 
-        elif 'meaning' in query:
-            speak("Which word do you want me to define Sir?")
-            queryword = takeCommand().lower()
-            meaning = PyDictionary.meaning(queryword)
+# Fix This Bug
+
+#         elif 'meaning' in query:
+#             speak("Which word do you want me to define Sir?")
+#             queryword = takeCommand().lower()
+#             meaning = PyDictionary.meaning(queryword)
 
             for i in meaning:
                 print(meaning[i])
