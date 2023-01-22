@@ -36,7 +36,7 @@ This voice assistant is built using a combination of various Python packages, ma
 To install the required dependencies, use pip by running:
 
 ```sh
-pip install -r requuirements.txt
+pip install -r requirements.txt
 ```
 
 ### Script-based Installation
