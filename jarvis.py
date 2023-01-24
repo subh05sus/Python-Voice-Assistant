@@ -194,6 +194,29 @@ if __name__ == "__main__":
             speak("volume lowered")
             sleep(1)
             speak("anything else for which i may assist you")
+        
+        elif 'remember something for me' in query:
+            file = open('memories.txt', 'a')
+            speak("Listening sir")
+            today=str(datetime.datetime.now())
+            dt='\t'*5+today
+            file.write(takeCommand().lower()+dt)
+            file.write('\n')
+            file.close()
+            speak("Memory saved sir")
+        
+        elif 'show saved memories' in query:
+
+           file = open('memories.txt', 'r')
+           memo = file.read()
+           speak(memo)
+           file.close()
+
+        elif 'clear memories' in query:
+
+           file = open('memories.txt', 'w')
+           file.close()
+           speak("Memories cleared sir") 
 
         elif 'battery' in query:
             battery = psutil.sensors_battery()
@@ -466,6 +489,6 @@ if __name__ == "__main__":
 #             queryword = takeCommand().lower()
 #             meaning = PyDictionary.meaning(queryword)
 
-            for i in meaning:
-                print(meaning[i])
-                speak("Sir the meaning is  ", str(meaning[i]))
+#            for i in meaning:
+#               print(meaning[i])
+#               speak("Sir the meaning is  ", str(meaning[i]))
