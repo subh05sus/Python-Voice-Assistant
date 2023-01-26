@@ -1,7 +1,11 @@
+import sys
+
 import wmi
 import os
 import requests
 from time import strftime
+from PyDictionary import PyDictionary
+dictionary = PyDictionary()
 import pyttsx3
 import datetime
 import speech_recognition as sr
@@ -24,15 +28,18 @@ import openai
 import time
 # import MyAlarm
 from pywikihow import search_wikihow
+
 # from PyDictionary import PyDictionary
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
-
-
-list_of_jokes = ["The three most well known languages in India are English, Hindi, and... JavaScript", "Interviewer... Where were you born?Me in India... Interviewer:.. oh, which part?... Me: What ‘which part’ ..? Whole body was born in India",
-                 "how many Indians does it take to fix a lightbulb?Two. One to do the task and other to explain how lightbulbs were actually invented in ancient India", "What do you call bread from India? It's Naan of your business", "Britain: Drive on the left side... Europe and America: Drive on the right side...India: lol what's a 'traffic law'?"]
-jokes = len(list_of_jokes)-1
+count=0
+list_of_jokes = ["The three most well known languages in India are English, Hindi, and... JavaScript",
+                 "Interviewer... Where were you born?Me in India... Interviewer:.. oh, which part?... Me: What ‘which part’ ..? Whole body was born in India",
+                 "how many Indians does it take to fix a lightbulb?Two. One to do the task and other to explain how lightbulbs were actually invented in ancient India",
+                 "What do you call bread from India? It's Naan of your business",
+                 "Britain: Drive on the left side... Europe and America: Drive on the right side...India: lol what's a 'traffic law'?"]
+jokes = len(list_of_jokes) - 1
 ran_joke = random.randint(0, jokes)
 
 
@@ -45,7 +52,7 @@ def speak(audio):  # speak audio
 def bytes_to_mb(bytes):
     KB = 1024  # One Kilobyte is 1024 bytes
     MB = KB * 1024  # One MB is 1024 KB
-    return int(bytes/MB)
+    return int(bytes / MB)
 
 
 def wishMe():  # wishes me
@@ -107,6 +114,14 @@ if __name__ == "__main__":
             up = bytes_to_mb(st.upload())
             speak(
                 f'Sir we have {dl} MB per second of DOWNLOAD SPEED and {up} MB per second of UPLOAD SPEED')
+
+        elif 'stop' in query or 'shut up' in query or 'sleep' in query:
+            speak('Alright Sir! Ping me up when you need me again')
+            sys.exit(0)
+
+        elif 'thank you' in query or 'appreciate' in query:
+            speak("It's my duty to assist you anytime sir")
+
 
         elif 'open youtube' in query:
             speak("Here We Go")
@@ -236,9 +251,18 @@ if __name__ == "__main__":
                     'Sir we have very low power!... Our System may Shutdown anytime soon!...')
 
         elif "mute" in query:
-            pyautogui.press("volumemute")
-            speak("volume muted")
-            sleep(1)
+            if count==0:
+                pyautogui.press("volumemute")
+                speak("volume muted")
+                sleep(1)
+                count = 1
+
+            elif count == 1:
+                pyautogui.press("volumemute")
+                speak("Voluble Now")
+                sleep(1)
+                count = 0
+
             speak("anything else for which i may assist you")
         elif "brightness" in query:
             try:
@@ -273,7 +297,7 @@ if __name__ == "__main__":
             webbrowser.open("spotify.com")
 
         elif "translate" in query:
-            translator = googletrans. Translator()
+            translator = googletrans.Translator()
             lang = ['en', 'ta', 'te', 'kn', 'ml']
             # To Print all the languages that Google Translator Support
             # Command to print Languages Supported
@@ -291,10 +315,10 @@ if __name__ == "__main__":
                 " english --->  1  Tamil ---> 2  Telugu ---> 3  Kannada ----> 4  Malayalam ---> 5")
             numberD = int(input("Enter here: "))
             translated = translator.translate(
-                text, src=lang[numberS-1], dest=lang[numberD-1])
+                text, src=lang[numberS - 1], dest=lang[numberD - 1])
             print(translated.text)
             print("Legibility is:",
-                  (translated.extra_data['confidence'])*100, "%")
+                  (translated.extra_data['confidence']) * 100, "%")
 
         elif "log off" in query or "sign out" in query:
             speak(
@@ -311,7 +335,7 @@ if __name__ == "__main__":
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
             speak("What is the name of the city?")
             city_name = takeCommand()
-            complete_url = base_url+"appid="+api_key+"&q="+city_name
+            complete_url = base_url + "appid=" + api_key + "&q=" + city_name
             response = requests.get(complete_url)
             x = response.json()
             if x["cod"] != "404":
@@ -359,7 +383,7 @@ if __name__ == "__main__":
             def GPT():
                 speak("Connecting to Veronica")
 
-                #Enter API KEY or Leave blank if you don't want to use this function
+                # Enter API KEY or Leave blank if you don't want to use this function
                 API_KEY = ""
                 openai.api_key = API_KEY
                 if API_KEY == "":
@@ -371,15 +395,13 @@ if __name__ == "__main__":
                     engine1.setProperty('voice', voices[1].id)
                     r = sr.Recognizer()
                     mic = sr.Microphone(device_index=1)
-                    
-                
 
                     conversation = ""
-                    
+
                     user_name = str(input("Enter your name: "))
                     bot_name = "Veronica"
-                    print("Hey,"+user_name)
-                    
+                    print("Hey," + user_name)
+
                     while True:
                         with mic as source:
                             print("\nlistening...")
@@ -392,15 +414,15 @@ if __name__ == "__main__":
                         except:
                             continue
 
+                        prompt = user_name + ": " + user_input + "\n" + bot_name + ": "
 
-                        prompt = user_name + ": " + user_input + "\n" + bot_name+ ": "
-                            
                         conversation += prompt  # allows for context
-                            # fetch response from open AI api
-                        response = openai.Completion.create(engine='text-davinci-003', prompt=conversation, max_tokens=50)
+                        # fetch response from open AI api
+                        response = openai.Completion.create(engine='text-davinci-003', prompt=conversation,
+                                                            max_tokens=50)
                         response_str = response["choices"][0]["text"].replace("\n", "")
                         response_str = response_str.split(user_name + ": ", 1)[0].split(bot_name + ": ", 1)[0]
-                        
+
                         conversation += response_str + "\n"
                         print(response_str)
                         engine1.say(response_str)
@@ -420,11 +442,13 @@ if __name__ == "__main__":
                         print(response_str)
                         engine1.say(response_str)
                         engine1.runAndWait()
+
+
             GPT()
 
         elif 'news' in query:
             api_key = '9bb9b456bf124f80aba6a0e09cc2f811'
-            URL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey='+api_key
+            URL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + api_key
 
             resp = requests.get(URL)
             if resp.status_code == 200:
@@ -456,7 +480,7 @@ if __name__ == "__main__":
             c = wmi.WMI()
             my_system = c.Win32_ComputerSystem()[0]
             speak(f"Manufacturer: {my_system.Manufacturer}")
-            speak(f"Model: {my_system. Model}")
+            speak(f"Model: {my_system.Model}")
             speak(f"Name: {my_system.Name}")
             speak(f"NumberOfProcessors: {my_system.NumberOfProcessors}")
             speak(f"SystemType: {my_system.SystemType}")
@@ -473,22 +497,26 @@ if __name__ == "__main__":
             except Exception as e:
                 speak('Sorry, I am unable to find the answer for your query.')
 
-#         elif 'set alarm' in query:
-#             speak(
-#                 "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
-#             a_info = takeCommand()
-#             a_info = a_info.replace('set an alarm for', '')
-#             a_info = a_info.replace('.', '')
-#             a_info = a_info.upper()
-#             MyAlarm.alarm(a_info)
 
-# Fix This Bug
+            #         elif 'set alarm' in query:
+            #             speak(
+            #                 "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
+            #             a_info = takeCommand()
+            #             a_info = a_info.replace('set an alarm for', '')
+            #             a_info = a_info.replace('.', '')
+            #             a_info = a_info.upper()
+            #             MyAlarm.alarm(a_info)
 
-#         elif 'meaning' in query:
-#             speak("Which word do you want me to define Sir?")
-#             queryword = takeCommand().lower()
-#             meaning = PyDictionary.meaning(queryword)
+            # Fix This Bug
 
-#            for i in meaning:
-#               print(meaning[i])
-#               speak("Sir the meaning is  ", str(meaning[i]))
+        elif 'meaning' in query:
+            speak("Which word do you want me to define Sir?")
+            queryword = takeCommand().lower()
+            meaning = dictionary.meaning(queryword)
+
+            for i in meaning['Noun']:
+                speak(f"Sir the meaning is  {i}")
+
+
+
+
