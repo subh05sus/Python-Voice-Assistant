@@ -1,8 +1,10 @@
+
 import wmi  # windows management information for any kind for information regarding system
 import os  # provides functions for interacting with the operating system
 import requests  # for making HTTP requests to a specified URL
 from time import strftime
 import pyttsx3  # text-to-speech conversion library
+import sys
 import datetime
 import speech_recognition as sr
 import wikipedia  # ********* to improve wikipedia searching
@@ -21,6 +23,7 @@ import googletrans
 from bs4 import BeautifulSoup  # to pull data out of html or XML files
 import openai
 import time
+
 # import alarm
 from pywikihow import search_wikihow
 from PyDictionary import PyDictionary
@@ -28,6 +31,7 @@ from PyDictionary import PyDictionary
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
+
 
 list_of_jokes = ["The three most well known languages in India are English, Hindi, and... JavaScript",
                  "Interviewer... Where were you born?Me in India... Interviewer:.. oh, which part?... Me: What ‘which part’ ..? Whole body was born in India",
@@ -113,6 +117,14 @@ if __name__ == "__main__":
             up = bytes_to_mb(st.upload())
             speak(
                 f'{name} we have {dl} MB per second of DOWNLOAD SPEED and {up} MB per second of UPLOAD SPEED')
+
+        elif 'stop' in query or 'shut up' in query or 'sleep' in query:
+            speak('Alright Sir! Ping me up when you need me again')
+            sys.exit(0)
+
+        elif 'thank you' in query or 'appreciate' in query:
+            speak("It's my duty to assist you anytime sir")
+
 
         elif 'open youtube' in query:
             speak("Here We Go")
@@ -220,7 +232,31 @@ if __name__ == "__main__":
             pyautogui.press("volumedown")
             speak("volume lowered")
             sleep(1)
-            speak("anything else for which I may assist you!")
+
+            speak("anything else for which i may assist you")
+        
+        elif 'remember something for me' in query:
+            file = open('memories.txt', 'a')
+            speak("Listening sir")
+            today=str(datetime.datetime.now())
+            dt='\t'*5+today
+            file.write(takeCommand().lower()+dt)
+            file.write('\n')
+            file.close()
+            speak("Memory saved sir")
+        
+        elif 'show saved memories' in query:
+
+           file = open('memories.txt', 'r')
+           memo = file.read()
+           speak(memo)
+           file.close()
+
+        elif 'clear memories' in query:
+
+           file = open('memories.txt', 'w')
+           file.close()
+           speak("Memories cleared sir") 
 
         elif 'battery' in query:
             battery = psutil.sensors_battery()
@@ -240,10 +276,20 @@ if __name__ == "__main__":
                     f'{name} we have very low power!... Our System may Shutdown anytime soon!...')
 
         elif "mute" in query:
-            pyautogui.press("volumemute")
-            speak("volume muted")
-            sleep(1)
-            speak("anything else for which I may assist you")
+
+            if count==0:
+                pyautogui.press("volumemute")
+                speak("volume muted")
+                sleep(1)
+                count = 1
+
+            elif count == 1:
+                pyautogui.press("volumemute")
+                speak("Voluble Now")
+                sleep(1)
+                count = 0
+
+            speak("anything else for which i may assist you")
 
         elif "brightness" in query:
             try:
@@ -322,7 +368,9 @@ if __name__ == "__main__":
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
             speak("What is the name of the city?")
             city_name = takeCommand()
+
             print(f"{city_name} whether conditions : ")
+
             complete_url = base_url + "appid=" + api_key + "&q=" + city_name
             response = requests.get(complete_url)
             x = response.json()
@@ -387,7 +435,9 @@ if __name__ == "__main__":
                     engine1.setProperty('voice', voices[1].id)
                     r = sr.Recognizer()
                     mic = sr.Microphone(device_index=1)
+
                     conversation = ""
+
                     user_name = str(input("Enter your name: "))
                     bot_name = "Veronica"
                     print("Hey," + user_name)
@@ -486,6 +536,19 @@ if __name__ == "__main__":
                 speak(data[0].summary)
             except Exception as e:
                 speak('Sorry, I am unable to find the answer for your query.')
+                
+
+            #         elif 'set alarm' in query:
+            #             speak(
+            #                 "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
+            #             a_info = takeCommand()
+            #             a_info = a_info.replace('set an alarm for', '')
+            #             a_info = a_info.replace('.', '')
+            #             a_info = a_info.upper()
+            #             MyAlarm.alarm(a_info)
+
+            # Fix This Bug
+
 
         elif 'meaning' in query:
             speak(f"Which word do you want me to define {name}?")
@@ -493,11 +556,3 @@ if __name__ == "__main__":
             meaning = PyDictionary.meaning(queryword)
             speak(meaning)
 
-        '''elif 'set alarm' in query:
-                  speak(
-                      "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
-                  a_info = takeCommand()
-                  a_info = a_info.replace('set an alarm for', '')
-                  a_info = a_info.replace('.', '')
-                  a_info = a_info.upper()
-                  alarm.alarm(a_info)  '''
