@@ -1,6 +1,6 @@
 # Python-Voice-Assistant
 
-A Python-based voice assistant that can greet you and perform a variety of tasks, including searching the web, opening social media, and creating a to-do list.
+A Python-based voice assistant that can greet you and perform a variety of tasks, including searching the web, opening social media, and creating a to-do list and much more to play with the amazing features.
 
 ![Python-Voice-Assistant](https://socialify.git.ci/subhadip-saha-05/python-voice-assistant/image?font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark)
 
