@@ -555,4 +555,18 @@ if __name__ == "__main__":
             queryword = takeCommand().lower()
             meaning = PyDictionary.meaning(queryword)
             speak(meaning)
+            
+        elif 'generate image' in query or 'image with ai' in query or 'image with artificial intelligence' in query:
+            speak("What kind of photo do you want to generate?")
+            imageinfo = takeCommand()
+            if imageinfo == "":
+                pass
+            else:
+                speak("just wait a bit! I'm processing it!")
+                response = openai.Image.create(
+                    prompt=imageinfo, n=1, size="1024x1024")
+                image_url = response['data'][0]['url']
+                webbrowser.open(image_url)
+                speak(f"Here is is!! {imageinfo}")
+                print(f"Here is is!! {imageinfo}")
 
