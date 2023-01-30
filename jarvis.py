@@ -153,6 +153,20 @@ if __name__ == "__main__":
             speak("Here We Go")
             webbrowser.open("instagram.com")
 
+            # code by PK284---------
+        elif 'search flight' in query:
+            speak("What is the source of the Flight Sir!!")
+            source= takeCommand()
+            speak("What is the Destination of the Flight Sir!!")
+            destination = takeCommand()
+            # speak("What is the Travel date sir Please speak in numberic format")
+            # traveldate = takeCommand()
+            # webbrowser.open(f"https://www.google.com/search?q={search_go}")
+            # webbrowser.open(f"https://www.makemytrip.com/flight/search?itinerary={source}-{destination}-25/01/2023-&tripType=O&paxType=A-1_C-0_I-0&intl=false&=&cabinClass=E")
+            webbrowser.open(f"https://www.makemytrip.com/flight/search?itinerary={source}-{destination}-26/01/2023&tripType=O&paxType=A-2_C-0_I-0&intl=false&cabinClass=E&ccde=IN&lang=eng")
+
+
+
         elif 'open facebook' in query:
             speak("Here We Go")
             webbrowser.open("facebook.com")
@@ -234,29 +248,6 @@ if __name__ == "__main__":
             sleep(1)
 
             speak("anything else for which i may assist you")
-        
-        elif 'remember something for me' in query:
-            file = open('memories.txt', 'a')
-            speak("Listening sir")
-            today=str(datetime.datetime.now())
-            dt='\t'*5+today
-            file.write(takeCommand().lower()+dt)
-            file.write('\n')
-            file.close()
-            speak("Memory saved sir")
-        
-        elif 'show saved memories' in query:
-
-           file = open('memories.txt', 'r')
-           memo = file.read()
-           speak(memo)
-           file.close()
-
-        elif 'clear memories' in query:
-
-           file = open('memories.txt', 'w')
-           file.close()
-           speak("Memories cleared sir") 
 
         elif 'battery' in query:
             battery = psutil.sensors_battery()
@@ -538,6 +529,16 @@ if __name__ == "__main__":
                 speak('Sorry, I am unable to find the answer for your query.')
                 
 
+        elif 'set alarm' in query:
+            speak(
+                "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
+            a_info = takeCommand()
+            a_info = a_info.replace('set an alarm for', '')
+            a_info = a_info.replace('.', '')
+            a_info = a_info.upper()
+            MyAlarm.alarm(a_info)
+
+
             #         elif 'set alarm' in query:
             #             speak(
             #                 "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
@@ -553,6 +554,21 @@ if __name__ == "__main__":
         elif 'meaning' in query:
             speak(f"Which word do you want me to define {name}?")
             queryword = takeCommand().lower()
+
+
+            meaning = PyDictionary.meaning(queryword)
+
+            for i in meaning:
+                print(meaning[i])
+                speak("Sir the meaning is  ", str(meaning[i]))
+
+            meaning = dictionary.meaning(queryword)
+
+            for i in meaning['Noun']:
+                speak(f"Sir the meaning is  {i}")
+
+
+
             meaning = PyDictionary.meaning(queryword)
             speak(meaning)
             
@@ -569,4 +585,5 @@ if __name__ == "__main__":
                 webbrowser.open(image_url)
                 speak(f"Here is is!! {imageinfo}")
                 print(f"Here is is!! {imageinfo}")
+
 
