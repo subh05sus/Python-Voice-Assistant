@@ -1,39 +1,38 @@
-import sys
 
-import wmi
-import os
-import requests
+import wmi  # windows management information for any kind for information regarding system
+import os  # provides functions for interacting with the operating system
+import requests  # for making HTTP requests to a specified URL
 from time import strftime
-from PyDictionary import PyDictionary
-dictionary = PyDictionary()
-import pyttsx3
+import pyttsx3  # text-to-speech conversion library
+import sys
 import datetime
 import speech_recognition as sr
-import wikipedia
+import wikipedia  # ********* to improve wikipedia searching
 import webbrowser
 import random
-import psutil  # Code Added By Vishnuppriyan
-import subprocess
-import speedtest  # Code Added By Vishnuppriyan
+import psutil  # used to track resource utilization in the system
+import subprocess  # used to run other programs
+import speedtest
 from ecapture import ecapture as ec
-import pyautogui  # code added by Pyoush Madan
-from time import sleep  # code added by Pyoush Madan
-import screen_brightness_control as sbc  # code added by Pyoush Madan
-import requests
+import pyautogui  # to take screenshot
+from time import sleep
+import screen_brightness_control as sbc
 import pyjokes
-import pywhatkit
-import googletrans  # Code Added By Vishnuppriyan
-from bs4 import BeautifulSoup
+import pywhatkit  # to send whatsapp msg
+import googletrans
+from bs4 import BeautifulSoup  # to pull data out of html or XML files
 import openai
 import time
-# import MyAlarm
-from pywikihow import search_wikihow
 
-# from PyDictionary import PyDictionary
+# import alarm
+from pywikihow import search_wikihow
+from PyDictionary import PyDictionary
+
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
-count=0
+
+
 list_of_jokes = ["The three most well known languages in India are English, Hindi, and... JavaScript",
                  "Interviewer... Where were you born?Me in India... Interviewer:.. oh, which part?... Me: What ‘which part’ ..? Whole body was born in India",
                  "how many Indians does it take to fix a lightbulb?Two. One to do the task and other to explain how lightbulbs were actually invented in ancient India",
@@ -41,6 +40,7 @@ list_of_jokes = ["The three most well known languages in India are English, Hind
                  "Britain: Drive on the left side... Europe and America: Drive on the right side...India: lol what's a 'traffic law'?"]
 jokes = len(list_of_jokes) - 1
 ran_joke = random.randint(0, jokes)
+global name
 
 
 def speak(audio):  # speak audio
@@ -56,24 +56,27 @@ def bytes_to_mb(bytes):
 
 
 def wishMe():  # wishes me
+    speak("Hey Jarvis here,Whats your name?")
+    name= takeCommand().lower()
+
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour <= 3:
-        speak("It's Late Night Sir!, You should sleep right now")
+        speak("I am Your Personal assistant, Jarvis! version 1.0!")
+        speak(f"As its too late {name}, better if you sleep early ...")
 
     elif hour >= 4 and hour < 12:
-        speak("Good Moring Master!")
-    elif hour >= 12 and hour < 17:
-        speak("Good Afternoon Sir !")
-    elif hour >= 17 and hour < 19:
-        speak("Good Evening !")
-    elif hour >= 19 and hour < 24:
-        speak("Good Night Sir!")
-
-    if hour >= 0 and hour <= 4:
-        pass
-    else:
+        speak(f"Good Moring {name}!")
         speak("I am Your Personal assistant, Jarvis! version 1.0!")
-
+    elif hour >= 12 and hour < 17:
+        speak(f"Good Afternoon {name} !")
+        speak("I am Your Personal assistant, Jarvis! version 1.0!")
+    elif hour >= 17 and hour < 19:
+        speak(f"Good Evening {name}!")
+        speak("I am Your Personal assistant, Jarvis! version 1.0!")
+    elif hour >= 19 and hour < 24:
+        speak("Hello ,I am Your Personal assistant, Jarvis! version 1.0!")
+        # good night will be greeted after the task is performed and exit command is given
+    return name
 
 def takeCommand():  # takes microphone inout and returns output
     r = sr.Recognizer()
@@ -95,8 +98,8 @@ def takeCommand():  # takes microphone inout and returns output
 
 
 if __name__ == "__main__":
-    wishMe()
-    speak("How May I Help You Sir ?")
+    name=wishMe()
+    speak("How May I Help You?")
     while True:
         query = takeCommand().lower()
 
@@ -113,7 +116,7 @@ if __name__ == "__main__":
             dl = bytes_to_mb(st.download())
             up = bytes_to_mb(st.upload())
             speak(
-                f'Sir we have {dl} MB per second of DOWNLOAD SPEED and {up} MB per second of UPLOAD SPEED')
+                f'{name} we have {dl} MB per second of DOWNLOAD SPEED and {up} MB per second of UPLOAD SPEED')
 
         elif 'stop' in query or 'shut up' in query or 'sleep' in query:
             speak('Alright Sir! Ping me up when you need me again')
@@ -126,25 +129,30 @@ if __name__ == "__main__":
         elif 'open youtube' in query:
             speak("Here We Go")
             webbrowser.open("youtube.com")
+
         elif 'youtube' in query and 'search' in query:
-            speak("What Should I Search Sir ?")
+            speak(f"What Should I Search {name}?")
             search_yt = takeCommand()
             search_yt = search_yt.replace(" ", "+")
             speak("Here We Go")
             webbrowser.open(
                 f"https://www.youtube.com/results?search_query={search_yt}")
+
         elif 'open google' in query:
             speak("Here We Go")
             webbrowser.open("google.com")
+
         elif 'google' in query and 'search' in query:
-            speak("What Should I Search Sir ?")
+            speak(f"What Should I Search {name} ?")
             search_go = takeCommand()
             search_go = search_go.replace(" ", "+")
             speak("Here We Go")
             webbrowser.open(f"https://www.google.com/search?q={search_go}")
+
         elif 'open instagram' in query:
             speak("Here We Go")
             webbrowser.open("instagram.com")
+
             # code by PK284---------
         elif 'search flight' in query:
             speak("What is the source of the Flight Sir!!")
@@ -156,50 +164,68 @@ if __name__ == "__main__":
             # webbrowser.open(f"https://www.google.com/search?q={search_go}")
             # webbrowser.open(f"https://www.makemytrip.com/flight/search?itinerary={source}-{destination}-25/01/2023-&tripType=O&paxType=A-1_C-0_I-0&intl=false&=&cabinClass=E")
             webbrowser.open(f"https://www.makemytrip.com/flight/search?itinerary={source}-{destination}-26/01/2023&tripType=O&paxType=A-2_C-0_I-0&intl=false&cabinClass=E&ccde=IN&lang=eng")
+
+
+
         elif 'open facebook' in query:
             speak("Here We Go")
             webbrowser.open("facebook.com")
+
         elif 'open twitter' in query:
             speak("Here We Go")
             webbrowser.open("twitter.com")
+
         elif 'download youtube videos' in query:
             speak("Here We Go")
             webbrowser.open("en.onlinevideoconverter.pro")
+
         elif 'open whatsapp' in query:
             speak("Here We Go")
             webbrowser.open("web.whatsapp.com")
+
         elif 'open reddit' in query:
             speak("Here We Go")
             webbrowser.open("reddit.com")
+
         elif 'open linkedin' in query:
             speak("Here We Go")
             webbrowser.open("linkedin.com")
+
         elif 'open pinterest' in query:
             speak("Here We Go")
             webbrowser.open("pinterest.com")
+
         elif 'open quora' in query:
             speak("Here We Go")
             webbrowser.open("quora.com")
+
         elif 'open discord' in query:
             speak("Here We Go")
             webbrowser.open("discord.com")
+
         elif ('open prime video' or 'open amazon prime video') in query:
             speak("Here We Go")
             webbrowser.open("primevideo.com")
+
         elif ('open netflix') in query:
             speak("Here We Go")
             webbrowser.open("netflix.com")
+
         elif ('open hotstar') in query:
             speak("Here We Go")
             webbrowser.open("hotstar.com")
+
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(strTime)
+
         elif 'the date' in query:
             today = datetime.date.today()
             speak(today)
+
         elif query == 'jarvis':
-            speak("At Your Service Sir, How can I help you")
+            speak(f"At Your Service {name}, How can I help you")
+
         elif 'joke' in query:
             URL = 'https://v2.jokeapi.dev/joke/Any'
             response = requests.get(URL)
@@ -214,31 +240,34 @@ if __name__ == "__main__":
             pyautogui.press("volumeup")
             speak("volume upped")
             sleep(1)
-            speak("anything else for which i may assist you")
+            speak("anything else for which I may assist you!")
+
         elif "volume down" in query:
             pyautogui.press("volumedown")
             speak("volume lowered")
             sleep(1)
+
             speak("anything else for which i may assist you")
 
         elif 'battery' in query:
             battery = psutil.sensors_battery()
             percentage = battery.percent
-            speak(f'Sir our System still has {percentage} percent battery')
+            speak(f'{name} our System still has {percentage} percent battery')
             if percentage >= 75:
                 print("\U0001F601")
-                speak('Sir we have enough power to continue our work!')
+                speak(f'{name} we have enough power to continue our work!')
             elif percentage >= 40 and percentage < 75:
                 speak(
-                    'Sir we should think of connecting our system to the battery supply!')
+                    f'{name} we should think of connecting our system to the battery supply!')
             elif percentage <= 40 and percentage >= 15:
                 speak(
-                    "Sir we don't have enough power to work through!... Connect now sir!")
+                    f"{name} we don't have enough power to work through!... Connect now sir!")
             elif percentage < 15:
                 speak(
-                    'Sir we have very low power!... Our System may Shutdown anytime soon!...')
+                    f'{name} we have very low power!... Our System may Shutdown anytime soon!...')
 
         elif "mute" in query:
+
             if count==0:
                 pyautogui.press("volumemute")
                 speak("volume muted")
@@ -252,6 +281,7 @@ if __name__ == "__main__":
                 count = 0
 
             speak("anything else for which i may assist you")
+
         elif "brightness" in query:
             try:
                 current = sbc.get_brightness()
@@ -259,7 +289,7 @@ if __name__ == "__main__":
                 set = sbc.set_brightness(bright)
                 speak(f"brightness set to {set} percent")
                 sleep(1)
-                speak("anything else for which i may assist you")
+                speak("anything else for which i may assist you...")
             except Exception as e:
                 print(e)
                 speak("error")
@@ -270,16 +300,19 @@ if __name__ == "__main__":
                     todo_w = takeCommand()
                     f.write(f"{todo_w}\n")
                 speak("To Do is updated successfully !")
+
             elif 'read' in query or 'tell' in query:
                 with open('todo.txt', 'r') as f:
                     todo_r = f.read()
                     if todo_r == "":
-                        todo_r = "No Pendning Tasks Sir"
+                        todo_r = "No Pendning Tasks "
                     speak(todo_r)
+
             elif 'erase' in query or 'remove all' in query or 'clear' in query:
                 with open("todo.txt", "w") as f:
                     f.write("")
-                speak("All Tasks has been cleared, Sir !")
+                speak("All Tasks has been cleared!")
+
         elif 'open spotify' in query:
             speak("Opening spotify")
             webbrowser.open("spotify.com")
@@ -290,7 +323,7 @@ if __name__ == "__main__":
             # To Print all the languages that Google Translator Support
             # Command to print Languages Supported
             # print(googletrans.LANGUAGES)
-            speak("Sir please tell me the Sentence that you want me to translate")
+            speak(f"{name} please tell me the Sentence that you want me to translate")
             text = takeCommand().lower()
             speak(
                 "Please choose a Source Language by pressing a number from the following List!")
@@ -312,17 +345,23 @@ if __name__ == "__main__":
             speak(
                 "Ok , your pc will log off in 10 seconds! make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
+
         elif "camera" in query or "take a photo" in query:
             ec.capture(0, "Jarvis-camera", "img.jpg")
+
         elif 'play' in query:
             song = query.replace('play', '')
             speak('playing ' + song)
             pywhatkit.playonyt(song)
+
         elif "weather" in query:
             api_key = "8ef61edcf1c576d65d836254e11ea420"
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
             speak("What is the name of the city?")
             city_name = takeCommand()
+
+            print(f"{city_name} whether conditions : ")
+
             complete_url = base_url + "appid=" + api_key + "&q=" + city_name
             response = requests.get(complete_url)
             x = response.json()
@@ -360,11 +399,15 @@ if __name__ == "__main__":
                 speak(headline.text)
 
         elif "who made you" in query or "who created you" in query or "who discovered you" in query:
-            speak("I was built by a Human")
-            print("I was built by a Human")
+            speak("I am a human creation built by all sets of knowledge of humans.I am nothing without humans")
 
-        elif 'jarvis quit' in query or 'exit' in query or 'close' in query:
-            speak("Thanks you for using Jarvis Sir")
+
+        elif 'jarvis quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
+            speak(f"Thank you for using Jarvis {name}")
+            if 19 <= int(datetime.datetime.now().hour) < 24:
+                speak(f"Have a very Good Night {name} and sweet dreams!")
+            else:
+                speak(f"See you soon,have a very Good Day {name}!")
             exit()
 
         elif "initiate" in query or "chat" in query or "Veronica" in query or "gpt" in query:
@@ -451,16 +494,16 @@ if __name__ == "__main__":
             print(ip)
             speak(f"Your ip address is {ip}")
         elif "switch the window" in query or "switch window" in query:
-            speak("Okay sir, Switching the window")
+            speak(f"Okay {name}, Switching the window")
             pyautogui.keyDown("alt")
             pyautogui.press("tab")
             pyautogui.keyUp("alt")
         elif 'screenshot' in query:
-            speak("screenshot taking ,sir")
+            speak("Taking screenshot")
             times = time.time()
             name_img = r"{}.png".format(str(times))
             img = pyautogui.screenshot(name_img)
-            speak("screenshot is taken, sir")
+            speak("Done!")
             img.show()
 
         elif "system" in query:
@@ -484,7 +527,7 @@ if __name__ == "__main__":
                 speak(data[0].summary)
             except Exception as e:
                 speak('Sorry, I am unable to find the answer for your query.')
-
+                
 
         elif 'set alarm' in query:
             speak(
@@ -509,8 +552,9 @@ if __name__ == "__main__":
 
 
         elif 'meaning' in query:
-            speak("Which word do you want me to define Sir?")
+            speak(f"Which word do you want me to define {name}?")
             queryword = takeCommand().lower()
+
 
             meaning = PyDictionary.meaning(queryword)
 
@@ -524,5 +568,8 @@ if __name__ == "__main__":
                 speak(f"Sir the meaning is  {i}")
 
 
+
+            meaning = PyDictionary.meaning(queryword)
+            speak(meaning)
 
 
