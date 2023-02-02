@@ -587,3 +587,10 @@ if __name__ == "__main__":
                 print(f"Here is is!! {imageinfo}")
 
 
+
+        elif 'play songs' in query:
+            songs_dir = 'E:/songs'      #you can change the directory to wherever your song is stored in computer local memory
+            songs = os.listdir(songs_dir)
+            os.startfile(os.path.join.songs_dir, songs[0])
+
+
