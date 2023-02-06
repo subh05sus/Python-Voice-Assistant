@@ -65,7 +65,7 @@ def wishMe():  # wishes me
         speak(f"As its too late {name}, better if you sleep early ...")
 
     elif hour >= 4 and hour < 12:
-        speak(f"Good Moring {name}!")
+        speak(f"Good Morning {name}!")
         speak("I am Your Personal assistant, Jarvis! version 1.0!")
     elif hour >= 12 and hour < 17:
         speak(f"Good Afternoon {name} !")
