@@ -10,6 +10,7 @@ import speech_recognition as sr
 import wikipedia  # ********* to improve wikipedia searching
 import webbrowser
 import random
+import pyautogui     # used to take ss
 import psutil  # used to track resource utilization in the system
 import subprocess  # used to run other programs
 import speedtest
@@ -316,6 +317,11 @@ if __name__ == "__main__":
         elif 'open spotify' in query:
             speak("Opening spotify")
             webbrowser.open("spotify.com")
+            
+        elif 'screenshot' in query:
+            sc = pyautogui.screenshot()
+            sc.save('pa_ss.png')
+            speak("Screenshot taken successfully.")    
 
         elif "translate" in query:
             translator = googletrans.Translator()
