@@ -496,4 +496,4 @@ if __name__ == "__main__":
             meaning = PyDictionary.meaning(queryword)
             speak(meaning)
 
-        speak("Whats my next job for you?")
+        speak("What do you want to continue with?")
