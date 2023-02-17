@@ -13,7 +13,7 @@ import random
 import pyautogui     # used to take ss
 import psutil  # used to track resource utilization in the system
 import subprocess  # used to run other programs
-import speedtest
+import speedtest as speedtest
 from ecapture import ecapture as ec
 import pyautogui  # to take screenshot
 from time import sleep
@@ -58,7 +58,7 @@ def bytes_to_mb(bytes):
 
 def wishMe():  # wishes me
     speak("Hey Jarvis here,Whats your name?")
-    name= takeCommand().lower()
+    name = takeCommand().lower()
 
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour <= 3:
@@ -75,9 +75,10 @@ def wishMe():  # wishes me
         speak(f"Good Evening {name}!")
         speak("I am Your Personal assistant, Jarvis! version 1.0!")
     elif hour >= 19 and hour < 24:
-        speak("Hello ,I am Your Personal assistant, Jarvis! version 1.0!")
+        speak(f"Hello {name} ,I am Your Personal assistant, Jarvis! version 1.0!")
         # good night will be greeted after the task is performed and exit command is given
     return name
+
 
 def takeCommand():  # takes microphone inout and returns output
     r = sr.Recognizer()
@@ -93,24 +94,26 @@ def takeCommand():  # takes microphone inout and returns output
         print(f"User said: {query}\n")  # User query will be printed
     except Exception as e:
         # Say that again will be printed in case of improper voice
-        print("Say that again please...")
+        speak("Say that again please...")
         return "None"  # None string will be returned
     return query
 
 
 if __name__ == "__main__":
-    name=wishMe()
+    name = wishMe()
     speak("How May I Help You?")
     while True:
         query = takeCommand().lower()
 
         if 'wikipedia' in query:
-            speak('Searching in Wikipedia')
-            query = query.replace("according to wikipedia", "")
-            results = wikipedia.summary(query, sentences=2)
-            speak("Accoring to Wikipedia")
-            print(results)
+            speak('What you wanna search on it?')
+            lookfor = takeCommand()
+            results = wikipedia.summary(lookfor, sentences=5)
+            source = wikipedia.page(lookfor).url
+            speak("According to Wikipedia")
             speak(results)
+            speak("You may refer to this url for more info")
+            print(source)
 
         elif 'internet speed' in query:
             st = speedtest.Speedtest()
@@ -408,7 +411,7 @@ if __name__ == "__main__":
             speak("I am a human creation built by all sets of knowledge of humans.I am nothing without humans")
 
 
-        elif 'jarvis quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
+        elif 'quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
             speak(f"Thank you for using Jarvis {name}")
             if 19 <= int(datetime.datetime.now().hour) < 24:
                 speak(f"Have a very Good Night {name} and sweet dreams!")
@@ -590,6 +593,7 @@ if __name__ == "__main__":
                 image_url = response['data'][0]['url']
                 webbrowser.open(image_url)
                 speak(f"Here is is!! {imageinfo}")
-                print(f"Here is is!! {imageinfo}")
-
+                print(f"Here is is!! {imageinfo}"
+                
+        speak("Whats my next job for you?")
 
