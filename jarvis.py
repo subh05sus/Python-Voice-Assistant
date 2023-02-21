@@ -1,13 +1,16 @@
+
 import wmi  # windows management information for any kind for information regarding system
 import os  # provides functions for interacting with the operating system
 import requests  # for making HTTP requests to a specified URL
 from time import strftime
 import pyttsx3  # text-to-speech conversion library
+import sys
 import datetime
 import speech_recognition as sr
 import wikipedia  # ********* to improve wikipedia searching
 import webbrowser
 import random
+import pyautogui     # used to take ss
 import psutil  # used to track resource utilization in the system
 import subprocess  # used to run other programs
 import speedtest as speedtest
@@ -21,13 +24,14 @@ import googletrans
 from bs4 import BeautifulSoup  # to pull data out of html or XML files
 import openai
 import time
-# import alarm
+from playsound import playsound
 from pywikihow import search_wikihow
 from PyDictionary import PyDictionary
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voices', voices[0].id)
+
 
 list_of_jokes = ["The three most well known languages in India are English, Hindi, and... JavaScript",
                  "Interviewer... Where were you born?Me in India... Interviewer:.. oh, which part?... Me: What ‘which part’ ..? Whole body was born in India",
@@ -61,7 +65,7 @@ def wishMe():  # wishes me
         speak(f"As its too late {name}, better if you sleep early ...")
 
     elif hour >= 4 and hour < 12:
-        speak(f"Good Moring {name}!")
+        speak(f"Good Morning {name}!")
         speak("I am Your Personal assistant, Jarvis! version 1.0!")
     elif hour >= 12 and hour < 17:
         speak(f"Good Afternoon {name} !")
@@ -117,6 +121,14 @@ if __name__ == "__main__":
             speak(
                 f'{name} we have {dl} MB per second of DOWNLOAD SPEED and {up} MB per second of UPLOAD SPEED')
 
+        elif 'stop' in query or 'shut up' in query or 'sleep' in query:
+            speak('Alright Sir! Ping me up when you need me again')
+            sys.exit(0)
+
+        elif 'thank you' in query or 'appreciate' in query:
+            speak("It's my duty to assist you anytime sir")
+
+
         elif 'open youtube' in query:
             speak("Here We Go")
             webbrowser.open("youtube.com")
@@ -143,6 +155,20 @@ if __name__ == "__main__":
         elif 'open instagram' in query:
             speak("Here We Go")
             webbrowser.open("instagram.com")
+
+            # code by PK284---------
+        elif 'search flight' in query:
+            speak("What is the source of the Flight Sir!!")
+            source= takeCommand()
+            speak("What is the Destination of the Flight Sir!!")
+            destination = takeCommand()
+            # speak("What is the Travel date sir Please speak in numberic format")
+            # traveldate = takeCommand()
+            # webbrowser.open(f"https://www.google.com/search?q={search_go}")
+            # webbrowser.open(f"https://www.makemytrip.com/flight/search?itinerary={source}-{destination}-25/01/2023-&tripType=O&paxType=A-1_C-0_I-0&intl=false&=&cabinClass=E")
+            webbrowser.open(f"https://www.makemytrip.com/flight/search?itinerary={source}-{destination}-26/01/2023&tripType=O&paxType=A-2_C-0_I-0&intl=false&cabinClass=E&ccde=IN&lang=eng")
+
+
 
         elif 'open facebook' in query:
             speak("Here We Go")
@@ -223,7 +249,8 @@ if __name__ == "__main__":
             pyautogui.press("volumedown")
             speak("volume lowered")
             sleep(1)
-            speak("anything else for which I may assist you!")
+
+            speak("anything else for which i may assist you")
 
         elif 'battery' in query:
             battery = psutil.sensors_battery()
@@ -243,10 +270,20 @@ if __name__ == "__main__":
                     f'{name} we have very low power!... Our System may Shutdown anytime soon!...')
 
         elif "mute" in query:
-            pyautogui.press("volumemute")
-            speak("volume muted")
-            sleep(1)
-            speak("anything else for which I may assist you")
+
+            if count==0:
+                pyautogui.press("volumemute")
+                speak("volume muted")
+                sleep(1)
+                count = 1
+
+            elif count == 1:
+                pyautogui.press("volumemute")
+                speak("Voluble Now")
+                sleep(1)
+                count = 0
+
+            speak("anything else for which i may assist you")
 
         elif "brightness" in query:
             try:
@@ -282,6 +319,11 @@ if __name__ == "__main__":
         elif 'open spotify' in query:
             speak("Opening spotify")
             webbrowser.open("spotify.com")
+            
+        elif 'screenshot' in query:
+            sc = pyautogui.screenshot()
+            sc.save('pa_ss.png')
+            speak("Screenshot taken successfully.")    
 
         elif "translate" in query:
             translator = googletrans.Translator()
@@ -325,7 +367,9 @@ if __name__ == "__main__":
             base_url = "https://api.openweathermap.org/data/2.5/weather?"
             speak("What is the name of the city?")
             city_name = takeCommand()
+
             print(f"{city_name} whether conditions : ")
+
             complete_url = base_url + "appid=" + api_key + "&q=" + city_name
             response = requests.get(complete_url)
             x = response.json()
@@ -366,14 +410,6 @@ if __name__ == "__main__":
             speak("I am a human creation built by all sets of knowledge of humans.I am nothing without humans")
 
 
-        elif 'quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
-            speak(f"Thank you for using Jarvis {name}")
-            if 19 <= int(datetime.datetime.now().hour) < 24:
-                speak(f"Have a very Good Night {name} and sweet dreams!")
-            else:
-                speak(f"See you soon,have a very Good Day {name}!")
-            exit()
-
         elif "initiate" in query or "chat" in query or "Veronica" in query or "gpt" in query:
             def GPT():
                 speak("Connecting to Veronica")
@@ -390,7 +426,9 @@ if __name__ == "__main__":
                     engine1.setProperty('voice', voices[1].id)
                     r = sr.Recognizer()
                     mic = sr.Microphone(device_index=1)
+
                     conversation = ""
+
                     user_name = str(input("Enter your name: "))
                     bot_name = "Veronica"
                     print("Hey," + user_name)
@@ -451,10 +489,13 @@ if __name__ == "__main__":
                 speak(news['description'])
             else:
                 speak("Cannot find a news at this moment")
+
+
         elif "ip address" in query:
             ip = requests.get('https://api.ipify.org').text
             print(ip)
             speak(f"Your ip address is {ip}")
+
         elif "switch the window" in query or "switch window" in query:
             speak(f"Okay {name}, Switching the window")
             pyautogui.keyDown("alt")
@@ -489,11 +530,64 @@ if __name__ == "__main__":
                 speak(data[0].summary)
             except Exception as e:
                 speak('Sorry, I am unable to find the answer for your query.')
+                
+
+        elif 'set alarm' in query:
+            speak(
+                "Tell me the time to set an Alarm. ")
+            speak("How do you want to set time in ,like hours/minutes/second")
+            a_info = takeCommand()
+            if('hours' in a_info):
+                speak("Tell me time in hours!")
+                a_info=int(input("Type it"))
+                # a_info = int(takeCommand())
+                speak(f"Alarm set for {a_info} hours")
+                time.sleep(a_info *3600)
+            elif('minutes' in a_info):
+                speak("Tell me time in minutes!")
+                a_info = int(input("Type it"))
+                # a_info = int(takeCommand())
+                time.sleep(a_info * 60)
+            else:
+                speak("Tell me time in seconds!")
+                a_info = int(input("Type it"))
+                # a_info = int(takeCommand())
+                time.sleep(a_info)
+
+            # playsound('Alarm.mp3')
+            speak("Hi I am back!!! Wake Up Wake Up Wake Up Wake Up Wake Up Wake Up!!")
 
         elif 'meaning' in query:
             speak(f"Which word do you want me to define {name}?")
             queryword = takeCommand().lower()
+
+
             meaning = PyDictionary.meaning(queryword)
-            speak(meaning)
+
+            for i in meaning:
+                print(meaning[i])
+                speak("Sir the meaning is  ", str(meaning[i]))
+
+        elif 'generate image' in query or 'image with ai' in query or 'image with artificial intelligence' in query:
+            speak("What kind of photo do you want to generate?")
+            imageinfo = takeCommand()
+            if imageinfo == "":
+                pass
+            else:
+                speak("just wait a bit! I'm processing it!")
+                response = openai.Image.create(
+                    prompt=imageinfo, n=1, size="1024x1024")
+                image_url = response['data'][0]['url']
+                webbrowser.open(image_url)
+                speak(f"Here is is!! {imageinfo}")
+                print(f"Here is is!! {imageinfo}")
+
+        elif 'quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
+            speak(f"Thank you for using Jarvis {name}")
+            if 19 <= int(datetime.datetime.now().hour) < 24:
+                speak(f"Have a very Good Night {name} and sweet dreams!")
+            else:
+                speak(f"See you soon,have a very Good Day {name}!")
+            exit()
 
         speak("What do you want to continue with?")
