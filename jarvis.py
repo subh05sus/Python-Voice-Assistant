@@ -24,8 +24,7 @@ import googletrans
 from bs4 import BeautifulSoup  # to pull data out of html or XML files
 import openai
 import time
-
-# import alarm
+from playsound import playsound
 from pywikihow import search_wikihow
 from PyDictionary import PyDictionary
 
@@ -411,14 +410,6 @@ if __name__ == "__main__":
             speak("I am a human creation built by all sets of knowledge of humans.I am nothing without humans")
 
 
-        elif 'quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
-            speak(f"Thank you for using Jarvis {name}")
-            if 19 <= int(datetime.datetime.now().hour) < 24:
-                speak(f"Have a very Good Night {name} and sweet dreams!")
-            else:
-                speak(f"See you soon,have a very Good Day {name}!")
-            exit()
-
         elif "initiate" in query or "chat" in query or "Veronica" in query or "gpt" in query:
             def GPT():
                 speak("Connecting to Veronica")
@@ -498,10 +489,13 @@ if __name__ == "__main__":
                 speak(news['description'])
             else:
                 speak("Cannot find a news at this moment")
+
+
         elif "ip address" in query:
             ip = requests.get('https://api.ipify.org').text
             print(ip)
             speak(f"Your ip address is {ip}")
+
         elif "switch the window" in query or "switch window" in query:
             speak(f"Okay {name}, Switching the window")
             pyautogui.keyDown("alt")
@@ -540,25 +534,28 @@ if __name__ == "__main__":
 
         elif 'set alarm' in query:
             speak(
-                "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
+                "Tell me the time to set an Alarm. ")
+            speak("How do you want to set time in ,like hours/minutes/second")
             a_info = takeCommand()
-            a_info = a_info.replace('set an alarm for', '')
-            a_info = a_info.replace('.', '')
-            a_info = a_info.upper()
-            MyAlarm.alarm(a_info)
+            if('hours' in a_info):
+                speak("Tell me time in hours!")
+                a_info=int(input("Type it"))
+                # a_info = int(takeCommand())
+                speak(f"Alarm set for {a_info} hours")
+                time.sleep(a_info *3600)
+            elif('minutes' in a_info):
+                speak("Tell me time in minutes!")
+                a_info = int(input("Type it"))
+                # a_info = int(takeCommand())
+                time.sleep(a_info * 60)
+            else:
+                speak("Tell me time in seconds!")
+                a_info = int(input("Type it"))
+                # a_info = int(takeCommand())
+                time.sleep(a_info)
 
-
-            #         elif 'set alarm' in query:
-            #             speak(
-            #                 "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
-            #             a_info = takeCommand()
-            #             a_info = a_info.replace('set an alarm for', '')
-            #             a_info = a_info.replace('.', '')
-            #             a_info = a_info.upper()
-            #             MyAlarm.alarm(a_info)
-
-            # Fix This Bug
-
+            # playsound('Alarm.mp3')
+            speak("Hi I am back!!! Wake Up Wake Up Wake Up Wake Up Wake Up Wake Up!!")
 
         elif 'meaning' in query:
             speak(f"Which word do you want me to define {name}?")
@@ -571,16 +568,6 @@ if __name__ == "__main__":
                 print(meaning[i])
                 speak("Sir the meaning is  ", str(meaning[i]))
 
-            meaning = dictionary.meaning(queryword)
-
-            for i in meaning['Noun']:
-                speak(f"Sir the meaning is  {i}")
-
-
-
-            meaning = PyDictionary.meaning(queryword)
-            speak(meaning)
-            
         elif 'generate image' in query or 'image with ai' in query or 'image with artificial intelligence' in query:
             speak("What kind of photo do you want to generate?")
             imageinfo = takeCommand()
@@ -593,7 +580,14 @@ if __name__ == "__main__":
                 image_url = response['data'][0]['url']
                 webbrowser.open(image_url)
                 speak(f"Here is is!! {imageinfo}")
-                print(f"Here is is!! {imageinfo}"
-                
-        speak("Whats my next job for you?")
+                print(f"Here is is!! {imageinfo}")
 
+        elif 'quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
+            speak(f"Thank you for using Jarvis {name}")
+            if 19 <= int(datetime.datetime.now().hour) < 24:
+                speak(f"Have a very Good Night {name} and sweet dreams!")
+            else:
+                speak(f"See you soon,have a very Good Day {name}!")
+            exit()
+
+        speak("What do you want to continue with?")
