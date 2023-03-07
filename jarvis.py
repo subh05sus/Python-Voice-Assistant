@@ -10,9 +10,10 @@ import speech_recognition as sr
 import wikipedia  # ********* to improve wikipedia searching
 import webbrowser
 import random
+import pyautogui     # used to take ss
 import psutil  # used to track resource utilization in the system
 import subprocess  # used to run other programs
-import speedtest
+import speedtest as speedtest
 from ecapture import ecapture as ec
 import pyautogui  # to take screenshot
 from time import sleep
@@ -23,10 +24,10 @@ import googletrans
 from bs4 import BeautifulSoup  # to pull data out of html or XML files
 import openai
 import time
-
-# import alarm
+from playsound import playsound
 from pywikihow import search_wikihow
 from PyDictionary import PyDictionary
+import turtle
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -57,7 +58,7 @@ def bytes_to_mb(bytes):
 
 def wishMe():  # wishes me
     speak("Hey Jarvis here,Whats your name?")
-    name= takeCommand().lower()
+    name = takeCommand().lower()
 
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour <= 3:
@@ -65,7 +66,7 @@ def wishMe():  # wishes me
         speak(f"As its too late {name}, better if you sleep early ...")
 
     elif hour >= 4 and hour < 12:
-        speak(f"Good Moring {name}!")
+        speak(f"Good Morning {name}!")
         speak("I am Your Personal assistant, Jarvis! version 1.0!")
     elif hour >= 12 and hour < 17:
         speak(f"Good Afternoon {name} !")
@@ -74,9 +75,10 @@ def wishMe():  # wishes me
         speak(f"Good Evening {name}!")
         speak("I am Your Personal assistant, Jarvis! version 1.0!")
     elif hour >= 19 and hour < 24:
-        speak("Hello ,I am Your Personal assistant, Jarvis! version 1.0!")
+        speak(f"Hello {name} ,I am Your Personal assistant, Jarvis! version 1.0!")
         # good night will be greeted after the task is performed and exit command is given
     return name
+
 
 def takeCommand():  # takes microphone inout and returns output
     r = sr.Recognizer()
@@ -92,24 +94,26 @@ def takeCommand():  # takes microphone inout and returns output
         print(f"User said: {query}\n")  # User query will be printed
     except Exception as e:
         # Say that again will be printed in case of improper voice
-        print("Say that again please...")
+        speak("Say that again please...")
         return "None"  # None string will be returned
     return query
 
 
 if __name__ == "__main__":
-    name=wishMe()
+    name = wishMe()
     speak("How May I Help You?")
     while True:
         query = takeCommand().lower()
 
         if 'wikipedia' in query:
-            speak('Searching in Wikipedia')
-            query = query.replace("according to wikipedia", "")
-            results = wikipedia.summary(query, sentences=2)
-            speak("Accoring to Wikipedia")
-            print(results)
+            speak('What you wanna search on it?')
+            lookfor = takeCommand()
+            results = wikipedia.summary(lookfor, sentences=5)
+            source = wikipedia.page(lookfor).url
+            speak("According to Wikipedia")
             speak(results)
+            speak("You may refer to this url for more info")
+            print(source)
 
         elif 'internet speed' in query:
             st = speedtest.Speedtest()
@@ -152,6 +156,136 @@ if __name__ == "__main__":
         elif 'open instagram' in query:
             speak("Here We Go")
             webbrowser.open("instagram.com")
+            
+        elif 'relax' in query:
+            speak("Relaxing........................")
+            w = 500
+            h = 500
+            food_size = 10
+            delay = 100
+            
+            offsets = {
+                "up": (0, 20),
+                "down": (0, -20),
+                "left": (-20, 0),
+                "right": (20, 0)
+            }
+            
+            def reset():
+                global snake, snake_dir, food_position, pen
+                snake = [[0, 0], [0, 20], [0, 40], [0, 60], [0, 80]]
+                snake_dir = "up"
+                food_position = get_random_food_position()
+                food.goto(food_position)
+                move_snake()
+                
+            def move_snake():
+                global snake_dir
+            
+                new_head = snake[-1].copy()
+                new_head[0] = snake[-1][0] + offsets[snake_dir][0]
+                new_head[1] = snake[-1][1] + offsets[snake_dir][1]
+            
+                
+                if new_head in snake[:-1]:
+                    reset()
+                else:
+                    snake.append(new_head)
+            
+                
+                    if not food_collision():
+                        snake.pop(0)
+            
+            
+                    if snake[-1][0] > w / 2:
+                        snake[-1][0] -= w
+                    elif snake[-1][0] < - w / 2:
+                        snake[-1][0] += w
+                    elif snake[-1][1] > h / 2:
+                        snake[-1][1] -= h
+                    elif snake[-1][1] < -h / 2:
+                        snake[-1][1] += h
+            
+            
+                    pen.clearstamps()
+            
+                    
+                    for segment in snake:
+                        pen.goto(segment[0], segment[1])
+                        pen.stamp()
+            
+                    
+                    screen.update()
+            
+                    turtle.ontimer(move_snake, delay)
+            
+            def food_collision():
+                global food_position
+                if get_distance(snake[-1], food_position) < 20:
+                    food_position = get_random_food_position()
+                    food.goto(food_position)
+                    return True
+                return False
+            
+            def get_random_food_position():
+                x = random.randint(- w / 2 + food_size, w / 2 - food_size)
+                y = random.randint(- h / 2 + food_size, h / 2 - food_size)
+                return (x, y)
+            
+            def get_distance(pos1, pos2):
+                x1, y1 = pos1
+                x2, y2 = pos2
+                distance = ((y2 - y1) ** 2 + (x2 - x1) ** 2) ** 0.5
+                return distance
+            def go_up():
+                global snake_dir
+                if snake_dir != "down":
+                    snake_dir = "up"
+            
+            def go_right():
+                global snake_dir
+                if snake_dir != "left":
+                    snake_dir = "right"
+            
+            def go_down():
+                global snake_dir
+                if snake_dir!= "up":
+                    snake_dir = "down"
+            
+            def go_left():
+                global snake_dir
+                if snake_dir != "right":
+                    snake_dir = "left"
+            
+            
+            screen = turtle.Screen()
+            screen.setup(w, h)
+            screen.title("Snake")
+            screen.bgcolor("blue")
+            screen.setup(500, 500)
+            screen.tracer(0)
+            
+            
+            pen = turtle.Turtle("square")
+            pen.penup()
+            
+            
+            food = turtle.Turtle()
+            food.shape("square")
+            food.color("yellow")
+            food.shapesize(food_size / 20)
+            food.penup()
+            
+            
+            screen.listen()
+            screen.onkey(go_up, "Up")
+            screen.onkey(go_right, "Right")
+            screen.onkey(go_down, "Down")
+            screen.onkey(go_left, "Left")
+            
+            
+            reset()
+            turtle.done()
 
             # code by PK284---------
         elif 'search flight' in query:
@@ -316,6 +450,11 @@ if __name__ == "__main__":
         elif 'open spotify' in query:
             speak("Opening spotify")
             webbrowser.open("spotify.com")
+            
+        elif 'screenshot' in query:
+            sc = pyautogui.screenshot()
+            sc.save('pa_ss.png')
+            speak("Screenshot taken successfully.")    
 
         elif "translate" in query:
             translator = googletrans.Translator()
@@ -402,14 +541,6 @@ if __name__ == "__main__":
             speak("I am a human creation built by all sets of knowledge of humans.I am nothing without humans")
 
 
-        elif 'jarvis quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
-            speak(f"Thank you for using Jarvis {name}")
-            if 19 <= int(datetime.datetime.now().hour) < 24:
-                speak(f"Have a very Good Night {name} and sweet dreams!")
-            else:
-                speak(f"See you soon,have a very Good Day {name}!")
-            exit()
-
         elif "initiate" in query or "chat" in query or "Veronica" in query or "gpt" in query:
             def GPT():
                 speak("Connecting to Veronica")
@@ -489,10 +620,13 @@ if __name__ == "__main__":
                 speak(news['description'])
             else:
                 speak("Cannot find a news at this moment")
+
+
         elif "ip address" in query:
             ip = requests.get('https://api.ipify.org').text
             print(ip)
             speak(f"Your ip address is {ip}")
+
         elif "switch the window" in query or "switch window" in query:
             speak(f"Okay {name}, Switching the window")
             pyautogui.keyDown("alt")
@@ -531,25 +665,28 @@ if __name__ == "__main__":
 
         elif 'set alarm' in query:
             speak(
-                "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
+                "Tell me the time to set an Alarm. ")
+            speak("How do you want to set time in ,like hours/minutes/second")
             a_info = takeCommand()
-            a_info = a_info.replace('set an alarm for', '')
-            a_info = a_info.replace('.', '')
-            a_info = a_info.upper()
-            MyAlarm.alarm(a_info)
+            if('hours' in a_info):
+                speak("Tell me time in hours!")
+                a_info=int(input("Type it"))
+                # a_info = int(takeCommand())
+                speak(f"Alarm set for {a_info} hours")
+                time.sleep(a_info *3600)
+            elif('minutes' in a_info):
+                speak("Tell me time in minutes!")
+                a_info = int(input("Type it"))
+                # a_info = int(takeCommand())
+                time.sleep(a_info * 60)
+            else:
+                speak("Tell me time in seconds!")
+                a_info = int(input("Type it"))
+                # a_info = int(takeCommand())
+                time.sleep(a_info)
 
-
-            #         elif 'set alarm' in query:
-            #             speak(
-            #                 "Tell me the time to set an Alarm. For example, set an alarm for 11:21 AM")
-            #             a_info = takeCommand()
-            #             a_info = a_info.replace('set an alarm for', '')
-            #             a_info = a_info.replace('.', '')
-            #             a_info = a_info.upper()
-            #             MyAlarm.alarm(a_info)
-
-            # Fix This Bug
-
+            # playsound('Alarm.mp3')
+            speak("Hi I am back!!! Wake Up Wake Up Wake Up Wake Up Wake Up Wake Up!!")
 
         elif 'meaning' in query:
             speak(f"Which word do you want me to define {name}?")
@@ -562,16 +699,6 @@ if __name__ == "__main__":
                 print(meaning[i])
                 speak("Sir the meaning is  ", str(meaning[i]))
 
-            meaning = dictionary.meaning(queryword)
-
-            for i in meaning['Noun']:
-                speak(f"Sir the meaning is  {i}")
-
-
-
-            meaning = PyDictionary.meaning(queryword)
-            speak(meaning)
-            
         elif 'generate image' in query or 'image with ai' in query or 'image with artificial intelligence' in query:
             speak("What kind of photo do you want to generate?")
             imageinfo = takeCommand()
@@ -586,4 +713,12 @@ if __name__ == "__main__":
                 speak(f"Here is is!! {imageinfo}")
                 print(f"Here is is!! {imageinfo}")
 
+        elif 'quit' in query or 'exit' in query or 'close' in query or 'bye' in query:
+            speak(f"Thank you for using Jarvis {name}")
+            if 19 <= int(datetime.datetime.now().hour) < 24:
+                speak(f"Have a very Good Night {name} and sweet dreams!")
+            else:
+                speak(f"See you soon,have a very Good Day {name}!")
+            exit()
 
+        speak("What do you want to continue with?")
