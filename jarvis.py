@@ -28,6 +28,7 @@ from playsound import playsound
 from pywikihow import search_wikihow
 from PyDictionary import PyDictionary
 import turtle
+import smtplib      #library to send email
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -97,6 +98,14 @@ def takeCommand():  # takes microphone inout and returns output
         speak("Say that again please...")
         return "None"  # None string will be returned
     return query
+
+def sendemail(to, content):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.login('enteryouremail@gmail.com','password')     #enter your email address
+    server.sendmail('enteryouremail@gmail.com', to, content)
+    server.close()
 
 
 if __name__ == "__main__":
@@ -720,5 +729,19 @@ if __name__ == "__main__":
             else:
                 speak(f"See you soon,have a very Good Day {name}!")
             exit()
+
+
+        elif 'send email' in query:
+            try:
+                speak("What should I say?")
+                content = takeCommand()
+                to = 'entersenderemail@gmail.com'        #enter sender's email address
+                sendemail(to,content)
+                speak("email has been sent.")
+
+            except Exception as e:
+                print(e)
+                speak("Unable to send email.")
+
 
         speak("What do you want to continue with?")
