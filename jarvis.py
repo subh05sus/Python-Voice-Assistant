@@ -1,4 +1,3 @@
-
 import wmi  # windows management information for any kind for information regarding system
 import os  # provides functions for interacting with the operating system
 import requests  # for making HTTP requests to a specified URL
@@ -99,12 +98,17 @@ def takeCommand():  # takes microphone inout and returns output
         return "None"  # None string will be returned
     return query
 
+
+with open('profile.txt', 'r') as f:
+    email = f.readline().strip()
+    password = f.readline().strip()
+
 def sendemail(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    server.login('enteryouremail@gmail.com','password')     #enter your email address
-    server.sendmail('enteryouremail@gmail.com', to, content)
+    server.login(email, password)
+    server.sendmail(email, to, content)
     server.close()
 
 
@@ -735,7 +739,8 @@ if __name__ == "__main__":
             try:
                 speak("What should I say?")
                 content = takeCommand()
-                to = 'entersenderemail@gmail.com'        #enter sender's email address
+                speak("What is the recipient's email address?")
+                to = takeCommand()
                 sendemail(to,content)
                 speak("email has been sent.")
 
