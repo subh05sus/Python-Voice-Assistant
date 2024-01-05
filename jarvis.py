@@ -28,6 +28,7 @@ from pywikihow import search_wikihow
 from PyDictionary import PyDictionary
 import turtle
 import smtplib      #library to send email
+import PyPDF2
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -111,6 +112,27 @@ def sendemail(to, content):
     server.sendmail(email, to, content)
     server.close()
 
+def readBooks():
+    speak("Enter the path of the file including it's name.")
+    filePath = input("Enter the path of the file (including it's name): ")
+    try:
+        os.startfile(filePath)
+        book = open(filePath, 'rb')
+        pdfreader = PyPDF2.PdfReader(book)
+        pages = len(pdfreader.pages)
+        speak(f"Number of pages in this books are {pages}")
+        speak("From Which Page I Have To Start Reading ?")
+        try:
+            Page = takeCommand()
+            numPage = int(Page)
+        except:
+            speak("Sorry Sir, Please Write The Page Number.")
+            numPage = int(input("Enter The Page Number: "))
+        page = pdfreader.pages[numPage-1]
+        text = page.extract_text()
+        speak(text)
+    except:
+        speak("This Book is not Present!")
 
 if __name__ == "__main__":
     name = wishMe()
@@ -127,6 +149,9 @@ if __name__ == "__main__":
             speak(results)
             speak("You may refer to this url for more info")
             print(source)
+
+        elif 'read books' in query:
+            readBooks()
 
         elif 'internet speed' in query:
             st = speedtest.Speedtest()
