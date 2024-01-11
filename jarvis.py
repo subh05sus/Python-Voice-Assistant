@@ -29,6 +29,7 @@ from PyDictionary import PyDictionary
 import turtle
 import smtplib      #library to send email
 import PyPDF2
+from PIL import Image
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -134,6 +135,36 @@ def readBooks():
     except:
         speak("This Book is not Present!")
 
+def NasaNews(API_KEY):
+    speak("On which day would you like to know ?")
+    Date = input("Enter date as (2022-10-21): ")
+    
+    speak("Extracting Data From Nasa...")
+    Url = "https://api.nasa.gov/planetary/apod?api_key=" + str(API_KEY)
+    Params = {'date':str(Date)}
+    r = requests.get(Url, params = Params)
+
+    Data = r.json()
+    print("\n")
+    copyR = Data['copyright']
+    Info = Data['explanation']
+    Title = Data['title']
+    Image_Url = Data['url']
+    Image_r = requests.get(Image_Url)
+    FileName = str(Date) + '.jpg'
+
+    with open(FileName, 'wb') as f:
+        f.write(Image_r.content)
+    img = Image.open(FileName)
+    img.show()
+
+    speak(f"{Title} is copyright by {copyR}\n")
+    speak(f"Acoording To Nasa : {Info}")
+
+    print(f"CopyRight by {copyR}\n")
+    print(f"Title: {Title}\n")
+    print(f"FileName: {FileName}\n")
+
 if __name__ == "__main__":
     name = wishMe()
     speak("How May I Help You?")
@@ -152,6 +183,17 @@ if __name__ == "__main__":
 
         elif 'read books' in query:
             readBooks()
+
+        elif 'nasa news' in query:
+            speak('Provide the path of text file having API KEY of NASA Organization.')
+            filePath = input('Enter the path of API KEY text file: ')
+            try:
+                with open(filePath, 'r') as file:
+                    API_KEY = file.read().strip()
+                    if API_KEY and API_KEY != "None":
+                        NasaNews(API_KEY)
+            except FileNotFoundError:
+                print(f"Error: {filePath} not found.")
 
         elif 'internet speed' in query:
             st = speedtest.Speedtest()
