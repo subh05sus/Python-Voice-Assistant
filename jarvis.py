@@ -195,6 +195,22 @@ if __name__ == "__main__":
             except FileNotFoundError:
                 print(f"Error: {filePath} not found.")
 
+        elif 'quote' in query:
+            quote_api_url = "https://zenquotes.io/api/random"
+            res = requests.get(quote_api_url)
+            if res.status_code == 200:
+                data = res.json()
+                if data:
+                    quote = data[0]['q']
+                    author = data[0]['a']
+                    speak(f"Here is the quote from the author {author}")
+                    speak(f"{quote}")
+                else:
+                    speak("Sorry , but there might be some network issue")
+            else:
+                speak("Failed to Fetch the quote due to some of the issues")
+
+
         elif 'internet speed' in query:
             st = speedtest.Speedtest()
             dl = bytes_to_mb(st.download())
