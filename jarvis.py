@@ -105,7 +105,7 @@ with open('profile.txt', 'r') as f:
     email = f.readline().strip()
     password = f.readline().strip()
 
-def sendemail(to, content):
+def sendemail(to, content): #function to send email
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
@@ -113,7 +113,7 @@ def sendemail(to, content):
     server.sendmail(email, to, content)
     server.close()
 
-def readBooks():
+def readBooks(): # function to read books
     speak("Enter the path of the file including it's name.")
     filePath = input("Enter the path of the file (including it's name): ")
     try:
@@ -135,7 +135,7 @@ def readBooks():
     except:
         speak("This Book is not Present!")
 
-def NasaNews(API_KEY):
+def NasaNews(API_KEY): # function to get news from NASA
     speak("On which day would you like to know ?")
     Date = input("Enter date as (2022-10-21): ")
     
