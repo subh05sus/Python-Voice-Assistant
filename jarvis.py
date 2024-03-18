@@ -105,7 +105,7 @@ with open('profile.txt', 'r') as f:
     email = f.readline().strip()
     password = f.readline().strip()
 
-def sendemail(to, content):
+def sendemail(to, content): #function to send email
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
@@ -113,7 +113,7 @@ def sendemail(to, content):
     server.sendmail(email, to, content)
     server.close()
 
-def readBooks():
+def readBooks(): # function to read books
     speak("Enter the path of the file including it's name.")
     filePath = input("Enter the path of the file (including it's name): ")
     try:
@@ -135,7 +135,7 @@ def readBooks():
     except:
         speak("This Book is not Present!")
 
-def NasaNews(API_KEY):
+def NasaNews(API_KEY): # function to get news from NASA
     speak("On which day would you like to know ?")
     Date = input("Enter date as (2022-10-21): ")
     
@@ -205,11 +205,11 @@ if __name__ == "__main__":
         elif 'stop' in query or 'shut up' in query or 'sleep' in query:
             speak('Alright Sir! Ping me up when you need me again')
             sys.exit(0)
-
+#             break
         elif 'thank you' in query or 'appreciate' in query:
             speak("It's my duty to assist you anytime sir")
 
-
+#             break
         elif 'open youtube' in query:
             speak("Here We Go")
             webbrowser.open("youtube.com")
@@ -276,7 +276,7 @@ if __name__ == "__main__":
                     if not food_collision():
                         snake.pop(0)
             
-            
+                                             # Check for collision with walls
                     if snake[-1][0] > w / 2:
                         snake[-1][0] -= w
                     elif snake[-1][0] < - w / 2:
