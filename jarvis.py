@@ -276,7 +276,7 @@ if __name__ == "__main__":
                     if not food_collision():
                         snake.pop(0)
             
-            
+                                             # Check for collision with walls
                     if snake[-1][0] > w / 2:
                         snake[-1][0] -= w
                     elif snake[-1][0] < - w / 2:
