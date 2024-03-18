@@ -205,11 +205,11 @@ if __name__ == "__main__":
         elif 'stop' in query or 'shut up' in query or 'sleep' in query:
             speak('Alright Sir! Ping me up when you need me again')
             sys.exit(0)
-
+#             break
         elif 'thank you' in query or 'appreciate' in query:
             speak("It's my duty to assist you anytime sir")
 
-
+#             break
         elif 'open youtube' in query:
             speak("Here We Go")
             webbrowser.open("youtube.com")
